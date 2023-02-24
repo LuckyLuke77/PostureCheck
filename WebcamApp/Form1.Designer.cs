@@ -44,18 +44,20 @@
             // cboCamera
             // 
             this.cboCamera.FormattingEnabled = true;
-            this.cboCamera.Location = new System.Drawing.Point(326, 45);
+            this.cboCamera.Location = new System.Drawing.Point(489, 69);
+            this.cboCamera.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cboCamera.Name = "cboCamera";
-            this.cboCamera.Size = new System.Drawing.Size(306, 21);
+            this.cboCamera.Size = new System.Drawing.Size(457, 28);
             this.cboCamera.TabIndex = 0;
             // 
             // cameraLabel
             // 
             this.cameraLabel.AutoSize = true;
             this.cameraLabel.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.cameraLabel.Location = new System.Drawing.Point(274, 53);
+            this.cameraLabel.Location = new System.Drawing.Point(411, 82);
+            this.cameraLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.cameraLabel.Name = "cameraLabel";
-            this.cameraLabel.Size = new System.Drawing.Size(46, 13);
+            this.cameraLabel.Size = new System.Drawing.Size(69, 20);
             this.cameraLabel.TabIndex = 1;
             this.cameraLabel.Text = "Camera:";
             // 
@@ -64,9 +66,10 @@
             this.btnStart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStart.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.btnStart.Location = new System.Drawing.Point(408, 606);
+            this.btnStart.Location = new System.Drawing.Point(612, 932);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(126, 23);
+            this.btnStart.Size = new System.Drawing.Size(189, 35);
             this.btnStart.TabIndex = 3;
             this.btnStart.Text = "Start Capturing";
             this.btnStart.UseVisualStyleBackColor = false;
@@ -74,15 +77,16 @@
             // 
             // captureTimer
             // 
-            this.captureTimer.Interval = 60000;
+            this.captureTimer.Interval = 5000;
             this.captureTimer.Tick += new System.EventHandler(this.captureTimer_Tick);
             // 
             // mainCamera
             // 
             this.mainCamera.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
-            this.mainCamera.Location = new System.Drawing.Point(25, 92);
+            this.mainCamera.Location = new System.Drawing.Point(38, 142);
+            this.mainCamera.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.mainCamera.Name = "mainCamera";
-            this.mainCamera.Size = new System.Drawing.Size(900, 508);
+            this.mainCamera.Size = new System.Drawing.Size(1350, 782);
             this.mainCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.mainCamera.TabIndex = 2;
             this.mainCamera.TabStop = false;
@@ -93,20 +97,22 @@
             this.MomentsPanel.ColumnCount = 1;
             this.MomentsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.MomentsPanel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(56)))), ((int)(((byte)(56)))));
-            this.MomentsPanel.Location = new System.Drawing.Point(944, 45);
+            this.MomentsPanel.Location = new System.Drawing.Point(1416, 69);
+            this.MomentsPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MomentsPanel.Name = "MomentsPanel";
             this.MomentsPanel.RowCount = 2;
             this.MomentsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.MomentsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.MomentsPanel.Size = new System.Drawing.Size(270, 628);
+            this.MomentsPanel.Size = new System.Drawing.Size(405, 900);
             this.MomentsPanel.TabIndex = 11;
             // 
             // folderLabel
             // 
             this.folderLabel.AutoSize = true;
-            this.folderLabel.Location = new System.Drawing.Point(1048, 676);
+            this.folderLabel.Location = new System.Drawing.Point(1563, 985);
+            this.folderLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.folderLabel.Name = "folderLabel";
-            this.folderLabel.Size = new System.Drawing.Size(74, 13);
+            this.folderLabel.Size = new System.Drawing.Size(109, 20);
             this.folderLabel.TabIndex = 12;
             this.folderLabel.TabStop = true;
             this.folderLabel.Text = "Show in folder";
@@ -118,18 +124,21 @@
             this.cameraText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
             this.cameraText.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.cameraText.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.cameraText.Location = new System.Drawing.Point(25, 344);
+            this.cameraText.Location = new System.Drawing.Point(38, 400);
+            this.cameraText.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cameraText.Name = "cameraText";
-            this.cameraText.Size = new System.Drawing.Size(900, 256);
+            this.cameraText.Size = new System.Drawing.Size(1350, 20);
             this.cameraText.TabIndex = 13;
             this.cameraText.Text = "Press the Start button to begin capturing";
+            this.cameraText.TextChanged += new System.EventHandler(this.cameraText_TextChanged);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(58)))), ((int)(((byte)(58)))));
-            this.ClientSize = new System.Drawing.Size(1237, 792);
+            this.ClientSize = new System.Drawing.Size(1898, 944);
             this.Controls.Add(this.cameraText);
             this.Controls.Add(this.folderLabel);
             this.Controls.Add(this.MomentsPanel);
@@ -137,11 +146,13 @@
             this.Controls.Add(this.cameraLabel);
             this.Controls.Add(this.cboCamera);
             this.Controls.Add(this.mainCamera);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PostureCheck";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.mainCamera)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
