@@ -22,23 +22,30 @@ namespace WebcamApp
 
         FilterInfoCollection filterInfoCollection;
         VideoCaptureDevice videoCaptureDevice;
+        bool cameraStarted;
         private void btnStart_Click(object sender, EventArgs e)
         {
-            videoCaptureDevice = new VideoCaptureDevice(filterInfoCollection[cboCamera.SelectedIndex].MonikerString);
-            videoCaptureDevice.NewFrame += VideoCaptureDevice_NewFrame;
-            videoCaptureDevice.Start();
-            //enable timer
-            captureTimer.Start();
-            cameraText.Visible = false;
+            if (!cameraStarted)
+            {
+                cameraStarted = true;
+                videoCaptureDevice = new VideoCaptureDevice(filterInfoCollection[cboCamera.SelectedIndex].MonikerString);
+                videoCaptureDevice.NewFrame += VideoCaptureDevice_NewFrame;
+                videoCaptureDevice.Start();
+                captureTimer.Start();
+                cameraText.Visible = false;
+                initTimer.Start();
+            }
 
         }
 
         private void VideoCaptureDevice_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
+            if (mainCamera.Image != null) mainCamera.Image.Dispose();
             mainCamera.Image = (Bitmap)eventArgs.Frame.Clone();
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            cameraStarted = false;
             filterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
             foreach(FilterInfo filterInfo in filterInfoCollection)
                 cboCamera.Items.Add(filterInfo.Name);
@@ -118,6 +125,12 @@ namespace WebcamApp
         private void cameraText_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void initTimer_Tick(object sender, EventArgs e)
+        {
+            CreateMoment();
+            initTimer.Stop();
         }
     }
 }
