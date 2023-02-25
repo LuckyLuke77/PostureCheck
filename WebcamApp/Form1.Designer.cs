@@ -38,6 +38,7 @@
             this.MomentsPanel = new System.Windows.Forms.TableLayoutPanel();
             this.folderLabel = new System.Windows.Forms.LinkLabel();
             this.cameraText = new System.Windows.Forms.RichTextBox();
+            this.initTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.mainCamera)).BeginInit();
             this.SuspendLayout();
             // 
@@ -74,7 +75,7 @@
             // 
             // captureTimer
             // 
-            this.captureTimer.Interval = 60000;
+            this.captureTimer.Interval = 2000;
             this.captureTimer.Tick += new System.EventHandler(this.captureTimer_Tick);
             // 
             // mainCamera
@@ -124,6 +125,11 @@
             this.cameraText.TabIndex = 13;
             this.cameraText.Text = "Press the Start button to begin capturing";
             // 
+            // initTimer
+            // 
+            this.initTimer.Interval = 2000;
+            this.initTimer.Tick += new System.EventHandler(this.initTimer_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -159,6 +165,7 @@
         private System.Windows.Forms.TableLayoutPanel MomentsPanel;
         private System.Windows.Forms.LinkLabel folderLabel;
         private System.Windows.Forms.RichTextBox cameraText;
+        private System.Windows.Forms.Timer initTimer;
     }
 }
 
