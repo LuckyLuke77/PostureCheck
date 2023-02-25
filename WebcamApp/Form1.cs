@@ -43,7 +43,6 @@ namespace WebcamApp
             if (mainCamera.Image != null) mainCamera.Image.Dispose();
             mainCamera.Image = (Bitmap)eventArgs.Frame.Clone();
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             cameraStarted = false;
@@ -52,6 +51,8 @@ namespace WebcamApp
                 cboCamera.Items.Add(filterInfo.Name);
             cboCamera.SelectedIndex = 0;
             videoCaptureDevice = new VideoCaptureDevice();
+
+           
 
             MomentsPanel.AutoScroll = false;
             MomentsPanel.HorizontalScroll.Enabled = false;
@@ -62,6 +63,8 @@ namespace WebcamApp
             cameraText.SelectionAlignment = HorizontalAlignment.Center;
 
             btnStart.FlatAppearance.BorderSize = 0;
+
+            MomentsDir();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -69,7 +72,7 @@ namespace WebcamApp
             if (videoCaptureDevice.IsRunning == true) {
                 videoCaptureDevice.Stop();
             }
-            Directory.GetFiles(@"E:\projects\webcam app\WebcamApp\WebcamApp\Moments\").ToList().ForEach(File.Delete);
+            Directory.GetFiles(MomentsDir()).ToList().ForEach(File.Delete);
         }
 
         private void captureTimer_Tick(object sender, EventArgs e)
@@ -85,14 +88,43 @@ namespace WebcamApp
 
             //misc
             MomentsPanel.VerticalScroll.Value = MomentsPanel.VerticalScroll.Maximum;
-            mainCamera.Image.Save($"E:/projects/webcam app/WebcamApp/WebcamApp/Moments/{Moment.allMoments[Moment.count].myDate.ToString("HH_mm_ss")}.png");
+            mainCamera.Image.Save(MomentsDir() + $"{Moment.allMoments[Moment.count].myDate.ToString("HH_mm_ss")}.png");
 
             Moment.count++;
         }
 
         private void folderLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("explorer.exe", @"E:\projects\webcam app\WebcamApp\WebcamApp\Moments\");
+            System.Diagnostics.Process.Start("explorer.exe", MomentsDir());
+        }
+
+        // Get the path of the "Moments" folder
+        private String MomentsDir()
+        {
+            String localDir; 
+            localDir = AppContext.BaseDirectory; // gets the path, inluding \bin\debug\
+            int dirLen = localDir.Length;
+            localDir = localDir.Substring(0, dirLen - 10); // remove \bin\debug\ from the path
+            localDir += @"Moments\"; // add Moments\ to the path
+            return localDir;
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            int width, height;
+            width = Convert.ToInt32(this.Width / 1.62); // the golden ratio :O
+            height = Convert.ToInt32(this.Height / 1.62);
+            mainCamera.Size = new Size(width, height);
+            cameraText.Size = new Size(width, 20);
+            cameraText.Top = mainCamera.Top + mainCamera.Height /2; // center the camera text at the center of the camera area!
+
+            MomentsPanel.Left = mainCamera.Left * 2 + mainCamera.Width;
+            //cameraText.Text = this.Width.ToString();
+        }
+
+        private void cameraText_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void initTimer_Tick(object sender, EventArgs e)
