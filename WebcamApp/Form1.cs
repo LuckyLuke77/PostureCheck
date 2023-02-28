@@ -5,8 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using AForge.Video;
 using AForge.Video.DirectShow;
@@ -52,8 +50,6 @@ namespace WebcamApp
             cboCamera.SelectedIndex = 0;
             videoCaptureDevice = new VideoCaptureDevice();
 
-           
-
             MomentsPanel.AutoScroll = false;
             MomentsPanel.HorizontalScroll.Enabled = false;
             MomentsPanel.HorizontalScroll.Visible = false;
@@ -63,8 +59,6 @@ namespace WebcamApp
             cameraText.SelectionAlignment = HorizontalAlignment.Center;
 
             btnStart.FlatAppearance.BorderSize = 0;
-
-            MomentsDir();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -79,6 +73,8 @@ namespace WebcamApp
         {
             CreateMoment();
         }
+
+        // TODO: move CreateMoment() inside the Moment Class.
         void CreateMoment() {
             Moment.allMoments[Moment.count] = new Moment();
             Moment.allMoments[Moment.count].myPictureBox.Image = (Bitmap)mainCamera.Image.Clone();
@@ -122,15 +118,22 @@ namespace WebcamApp
             //cameraText.Text = this.Width.ToString();
         }
 
-        private void cameraText_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void initTimer_Tick(object sender, EventArgs e)
         {
             CreateMoment();
             initTimer.Stop();
+        }
+
+
+        private void temp()
+        {
+            cameraText.Text = "hi";
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
