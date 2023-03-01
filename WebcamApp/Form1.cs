@@ -22,19 +22,6 @@ namespace WebcamApp
         FilterInfoCollection filterInfoCollection;
         VideoCaptureDevice videoCaptureDevice;
         bool cameraStarted = false;
-        private void btnStart_Click(object sender, EventArgs e)
-        {
-            if (!cameraStarted)
-            {
-                cameraStarted = true;
-                cameraText.Visible = false; // hide the "press start to begin..." text
-                videoCaptureDevice.Start(); // start the camera device
-                captureTimer.Start();       // start the moments timer
-                initTimer.Start();          // start the timer that makes the initial capture
-                mainCamera.Show();
-            }
-
-        }
 
         private void VideoCaptureDevice_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
@@ -49,19 +36,18 @@ namespace WebcamApp
                 cboCamera.Items.Add(filterInfo.Name);
             cboCamera.SelectedIndex = 0;
 
+            // initialiaze video capture stuff
             videoCaptureDevice = new VideoCaptureDevice();
+            videoCaptureDevice = new VideoCaptureDevice(filterInfoCollection[cboCamera.SelectedIndex].MonikerString);
+            videoCaptureDevice.NewFrame += VideoCaptureDevice_NewFrame;
 
-            MomentsPanel.HorizontalScroll.Maximum = 0;
-            MomentsPanel.AutoScroll = true;
-
-            cameraText.SelectionAlignment = HorizontalAlignment.Center;
-
+            // initialize the apprearances of stuff
             btnStart.FlatAppearance.BorderSize = 0;
             btnPause.FlatAppearance.BorderSize = 0;
             btnStop.FlatAppearance.BorderSize = 0;
-
-            videoCaptureDevice = new VideoCaptureDevice(filterInfoCollection[cboCamera.SelectedIndex].MonikerString);
-            videoCaptureDevice.NewFrame += VideoCaptureDevice_NewFrame;
+            MomentsPanel.HorizontalScroll.Maximum = 0;
+            MomentsPanel.AutoScroll = true;
+            cameraText.SelectionAlignment = HorizontalAlignment.Center;
             mainCamera.Hide();
             Form1_Resize(sender, e);
             Form1_ResizeEnd(sender, e);
@@ -70,9 +56,9 @@ namespace WebcamApp
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (videoCaptureDevice.IsRunning == true) {
-                videoCaptureDevice.Stop();
+                videoCaptureDevice.Stop(); // stop the camera
             }
-            Directory.GetFiles(MomentsDir()).ToList().ForEach(File.Delete);
+            Directory.GetFiles(MomentsDir()).ToList().ForEach(File.Delete); // delete the contents of the Moments folder
         }
 
         private void captureTimer_Tick(object sender, EventArgs e)
@@ -106,6 +92,7 @@ namespace WebcamApp
             return localDir;
         }
 
+        // fancy resizing ratios to make me look smart
         private void Form1_Resize(object sender, EventArgs e)
         {
             int width, height;
@@ -115,7 +102,7 @@ namespace WebcamApp
             // Resize main camera PictureBox (kinda)
             assistPicBox.Size = new Size(width, height);
             assistPicBox.Left = (this.Width - 800) / 10;
-            assistPicBox.Top = this.Height / 2 - height / 2;
+            assistPicBox.Top = (this.Height - 600) / 10 + 70;
 
             // Resize main camera RichTextBox
             cameraText.Size = new Size(width, 20);
@@ -143,6 +130,7 @@ namespace WebcamApp
             folderLabel.Left = MomentsPanel.Left;
         }
 
+        // tick once to create the first moment
         private void initTimer_Tick(object sender, EventArgs e)
         {
             CreateMoment();
@@ -152,21 +140,19 @@ namespace WebcamApp
         private void Form1_ResizeBegin(object sender, EventArgs e)
         {
             mainCamera.Hide();
-
         }
 
         private void Form1_ResizeEnd(object sender, EventArgs e)
         {
-            if (cameraStarted) { 
+            int width, height;
+            width = Convert.ToInt32(this.Width / 1.62); // golden ratio!! :O
+            height = Convert.ToInt32(this.Height / 1.62);
+
+            mainCamera.Size = new Size(width, height);
+            mainCamera.Left = assistPicBox.Left + (assistPicBox.Width - mainCamera.Width) / 2;
+            mainCamera.Top = assistPicBox.Top + (assistPicBox.Height - mainCamera.Height) / 2;
+            if (cameraStarted) {
                 mainCamera.Show();
-
-                int width, height;
-                width = Convert.ToInt32(this.Width / 1.62); // golden ratio!! :O
-                height = Convert.ToInt32(this.Height / 1.62);
-
-                mainCamera.Size = new Size(width, height);
-                mainCamera.Left = assistPicBox.Left + (assistPicBox.Width - mainCamera.Width) / 2;
-                mainCamera.Top = assistPicBox.Top + (assistPicBox.Height - mainCamera.Height) / 2;
             }
         }
 
@@ -174,12 +160,23 @@ namespace WebcamApp
         {
 
         }
-
-        private void btnPause_Click(object sender, EventArgs e)
+        // BUTTONS!
+        //  START CAPTURING button
+        private void btnStart_Click(object sender, EventArgs e)
         {
+            if (!cameraStarted)
+            {
+                cameraStarted = true;
+                cameraText.Visible = false; // hide the "press start to begin..." text
+                videoCaptureDevice.Start(); // start the camera device
+                captureTimer.Start();       // start the moments timer
+                initTimer.Start();          // start the timer that makes the initial capture
+                mainCamera.Show();
+            }
 
         }
 
+        //  STOP CAPTURING button
         private void btnStop_Click(object sender, EventArgs e)
         {
             if (cameraStarted)
@@ -190,6 +187,16 @@ namespace WebcamApp
                 captureTimer.Stop();       // stop the moments timer
                 mainCamera.Hide();
             }
+        }
+        //  PAUSE VIDEO button
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
