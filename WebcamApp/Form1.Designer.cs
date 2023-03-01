@@ -44,10 +44,14 @@
             this.btnPanel = new System.Windows.Forms.Panel();
             this.btnPause = new System.Windows.Forms.Button();
             this.c_selectPanel = new System.Windows.Forms.Panel();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.mainCamera)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.assistPicBox)).BeginInit();
             this.btnPanel.SuspendLayout();
             this.c_selectPanel.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // cboCamera
@@ -84,7 +88,7 @@
             // 
             // captureTimer
             // 
-            this.captureTimer.Interval = 5000;
+            this.captureTimer.Interval = 3000;
             this.captureTimer.Tick += new System.EventHandler(this.captureTimer_Tick);
             // 
             // mainCamera
@@ -131,6 +135,7 @@
             this.cameraText.ForeColor = System.Drawing.SystemColors.MenuBar;
             this.cameraText.Location = new System.Drawing.Point(157, 270);
             this.cameraText.Name = "cameraText";
+            this.cameraText.ReadOnly = true;
             this.cameraText.Size = new System.Drawing.Size(900, 13);
             this.cameraText.TabIndex = 13;
             this.cameraText.Text = "Press the Start button to begin capturing";
@@ -182,7 +187,7 @@
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(126, 23);
             this.btnPause.TabIndex = 15;
-            this.btnPause.Text = "button2";
+            this.btnPause.Text = "Pause Video";
             this.btnPause.UseVisualStyleBackColor = false;
             this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
             // 
@@ -194,6 +199,35 @@
             this.c_selectPanel.Name = "c_selectPanel";
             this.c_selectPanel.Size = new System.Drawing.Size(365, 30);
             this.c_selectPanel.TabIndex = 18;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1084, 24);
+            this.menuStrip1.TabIndex = 19;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuBar;
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "&File";
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
+            this.exitToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuBar;
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -208,6 +242,8 @@
             this.Controls.Add(this.MomentsPanel);
             this.Controls.Add(this.mainCamera);
             this.Controls.Add(this.assistPicBox);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -222,6 +258,8 @@
             this.btnPanel.ResumeLayout(false);
             this.c_selectPanel.ResumeLayout(false);
             this.c_selectPanel.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -244,6 +282,9 @@
         private System.Windows.Forms.Panel btnPanel;
         private System.Windows.Forms.Panel c_selectPanel;
         private System.Windows.Forms.Button btnPause;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 
