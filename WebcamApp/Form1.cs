@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Tracing;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -20,18 +21,17 @@ namespace WebcamApp
 
         FilterInfoCollection filterInfoCollection;
         VideoCaptureDevice videoCaptureDevice;
-        bool cameraStarted;
+        bool cameraStarted = false;
         private void btnStart_Click(object sender, EventArgs e)
         {
             if (!cameraStarted)
             {
                 cameraStarted = true;
-                videoCaptureDevice = new VideoCaptureDevice(filterInfoCollection[cboCamera.SelectedIndex].MonikerString);
-                videoCaptureDevice.NewFrame += VideoCaptureDevice_NewFrame;
-                videoCaptureDevice.Start();
-                captureTimer.Start();
-                cameraText.Visible = false;
-                initTimer.Start();
+                cameraText.Visible = false; // hide the "press start to begin..." text
+                videoCaptureDevice.Start(); // start the camera device
+                captureTimer.Start();       // start the moments timer
+                initTimer.Start();          // start the timer that makes the initial capture
+                mainCamera.Show();
             }
 
         }
@@ -43,22 +43,28 @@ namespace WebcamApp
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            cameraStarted = false;
+            // initialize the list of available cameras
             filterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
             foreach(FilterInfo filterInfo in filterInfoCollection)
                 cboCamera.Items.Add(filterInfo.Name);
             cboCamera.SelectedIndex = 0;
+
             videoCaptureDevice = new VideoCaptureDevice();
 
-            MomentsPanel.AutoScroll = false;
-            MomentsPanel.HorizontalScroll.Enabled = false;
-            MomentsPanel.HorizontalScroll.Visible = false;
             MomentsPanel.HorizontalScroll.Maximum = 0;
             MomentsPanel.AutoScroll = true;
 
             cameraText.SelectionAlignment = HorizontalAlignment.Center;
 
             btnStart.FlatAppearance.BorderSize = 0;
+            btnPause.FlatAppearance.BorderSize = 0;
+            btnStop.FlatAppearance.BorderSize = 0;
+
+            videoCaptureDevice = new VideoCaptureDevice(filterInfoCollection[cboCamera.SelectedIndex].MonikerString);
+            videoCaptureDevice.NewFrame += VideoCaptureDevice_NewFrame;
+            mainCamera.Hide();
+            Form1_Resize(sender, e);
+            Form1_ResizeEnd(sender, e);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -74,24 +80,19 @@ namespace WebcamApp
             CreateMoment();
         }
 
-        // TODO: move CreateMoment() inside the Moment Class.
         void CreateMoment() {
-            Moment.allMoments[Moment.count] = new Moment();
-            Moment.allMoments[Moment.count].myPictureBox.Image = (Bitmap)mainCamera.Image.Clone();
-            MomentsPanel.Controls.Add(Moment.allMoments[Moment.count].myControls[0]);
-            MomentsPanel.Controls.Add(Moment.allMoments[Moment.count].myControls[1]);
-       
-
-            //misc
-            MomentsPanel.VerticalScroll.Value = MomentsPanel.VerticalScroll.Maximum;
-            mainCamera.Image.Save(MomentsDir() + $"{Moment.allMoments[Moment.count].myDate.ToString("HH_mm_ss")}.png");
-
+            Moment.allMoments[Moment.count] = new Moment(); // create a new Moment object, and save it inside the allMoments list
+            Moment.allMoments[Moment.count].myPictureBox.Image = (Bitmap)mainCamera.Image.Clone(); // save the current camera frame to the object
+            MomentsPanel.Controls.Add(Moment.allMoments[Moment.count].myControls[0]); // add the image to the Moments panel
+            MomentsPanel.Controls.Add(Moment.allMoments[Moment.count].myControls[1]); // add the label to the Moments panel
+            MomentsPanel.VerticalScroll.Value = MomentsPanel.VerticalScroll.Maximum; // scroll to the bottom of the moments panel
+            mainCamera.Image.Save(MomentsDir() + $"{Moment.allMoments[Moment.count].myDate.ToString("HH_mm_ss")}.png"); // save the image inside the moments folder
             Moment.count++;
         }
 
         private void folderLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("explorer.exe", MomentsDir());
+            System.Diagnostics.Process.Start("explorer.exe", MomentsDir()); // open file explorer inside the Moments folder
         }
 
         // Get the path of the "Moments" folder
@@ -108,14 +109,38 @@ namespace WebcamApp
         private void Form1_Resize(object sender, EventArgs e)
         {
             int width, height;
-            width = Convert.ToInt32(this.Width / 1.62); // the golden ratio :O
-            height = Convert.ToInt32(this.Height / 1.62);
-            mainCamera.Size = new Size(width, height);
-            cameraText.Size = new Size(width, 20);
-            cameraText.Top = mainCamera.Top + mainCamera.Height /2; // center the camera text at the center of the camera area!
+            width = Convert.ToInt32(this.Width / 1.5); 
+            height = Convert.ToInt32(this.Height / 1.5);
 
-            MomentsPanel.Left = mainCamera.Left * 2 + mainCamera.Width;
-            //cameraText.Text = this.Width.ToString();
+            // Resize main camera PictureBox (kinda)
+            assistPicBox.Size = new Size(width, height);
+            assistPicBox.Left = (this.Width - 800) / 10;
+            assistPicBox.Top = this.Height / 2 - height / 2;
+
+            // Resize main camera RichTextBox
+            cameraText.Size = new Size(width, 20);
+            cameraText.Top = assistPicBox.Top + assistPicBox.Height / 2; // center the camera text at the center of the camera area!
+            cameraText.Left = assistPicBox.Left;
+
+            // Reposition buttons
+            btnPanel.Left = assistPicBox.Left + assistPicBox.Width / 2 - btnPanel.Width / 2;
+            btnPanel.Top = assistPicBox.Top + assistPicBox.Height + 10;
+
+            // Reposition camera select panel
+            c_selectPanel.Left = assistPicBox.Left + assistPicBox.Width / 2 - c_selectPanel.Width / 2;
+            c_selectPanel.Top = assistPicBox.Top - c_selectPanel.Height - 5;
+
+            // Resize MomentsPanel
+            //  position
+            MomentsPanel.Top = c_selectPanel.Top;
+            MomentsPanel.Left = assistPicBox.Left * 2 + assistPicBox.Width;
+            //  size
+            MomentsPanel.Width = 250;
+            MomentsPanel.Height = btnPanel.Top - c_selectPanel.Top + btnPanel.Height;
+
+            // Reposition show in folder label
+            folderLabel.Top = MomentsPanel.Top + MomentsPanel.Height + 5;
+            folderLabel.Left = MomentsPanel.Left;
         }
 
         private void initTimer_Tick(object sender, EventArgs e)
@@ -124,16 +149,47 @@ namespace WebcamApp
             initTimer.Stop();
         }
 
-
-        private void temp()
+        private void Form1_ResizeBegin(object sender, EventArgs e)
         {
-            cameraText.Text = "hi";
+            mainCamera.Hide();
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Form1_ResizeEnd(object sender, EventArgs e)
+        {
+            if (cameraStarted) { 
+                mainCamera.Show();
+
+                int width, height;
+                width = Convert.ToInt32(this.Width / 1.62); // golden ratio!! :O
+                height = Convert.ToInt32(this.Height / 1.62);
+
+                mainCamera.Size = new Size(width, height);
+                mainCamera.Left = assistPicBox.Left + (assistPicBox.Width - mainCamera.Width) / 2;
+                mainCamera.Top = assistPicBox.Top + (assistPicBox.Height - mainCamera.Height) / 2;
+            }
+        }
+
+        private void mainCamera_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            if (cameraStarted)
+            {
+                cameraStarted = false;
+                cameraText.Visible = true; // show the "press start to begin..." text
+                videoCaptureDevice.Stop(); // stop the camera device
+                captureTimer.Stop();       // stop the moments timer
+                mainCamera.Hide();
+            }
         }
     }
 }

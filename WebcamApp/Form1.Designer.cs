@@ -39,27 +39,33 @@
             this.folderLabel = new System.Windows.Forms.LinkLabel();
             this.cameraText = new System.Windows.Forms.RichTextBox();
             this.initTimer = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
+            this.assistPicBox = new System.Windows.Forms.PictureBox();
+            this.btnPanel = new System.Windows.Forms.Panel();
+            this.btnPause = new System.Windows.Forms.Button();
+            this.c_selectPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.mainCamera)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.assistPicBox)).BeginInit();
+            this.btnPanel.SuspendLayout();
+            this.c_selectPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // cboCamera
             // 
+            this.cboCamera.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCamera.FormattingEnabled = true;
-            this.cboCamera.Location = new System.Drawing.Point(489, 69);
-            this.cboCamera.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cboCamera.Location = new System.Drawing.Point(55, 6);
             this.cboCamera.Name = "cboCamera";
-            this.cboCamera.Size = new System.Drawing.Size(457, 28);
+            this.cboCamera.Size = new System.Drawing.Size(306, 21);
             this.cboCamera.TabIndex = 0;
             // 
             // cameraLabel
             // 
             this.cameraLabel.AutoSize = true;
             this.cameraLabel.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.cameraLabel.Location = new System.Drawing.Point(411, 82);
-            this.cameraLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.cameraLabel.Location = new System.Drawing.Point(3, 9);
             this.cameraLabel.Name = "cameraLabel";
-            this.cameraLabel.Size = new System.Drawing.Size(69, 20);
+            this.cameraLabel.Size = new System.Drawing.Size(46, 13);
             this.cameraLabel.TabIndex = 1;
             this.cameraLabel.Text = "Camera:";
             // 
@@ -68,10 +74,9 @@
             this.btnStart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStart.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.btnStart.Location = new System.Drawing.Point(612, 932);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnStart.Location = new System.Drawing.Point(3, 3);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(189, 35);
+            this.btnStart.Size = new System.Drawing.Size(126, 23);
             this.btnStart.TabIndex = 3;
             this.btnStart.Text = "Start Capturing";
             this.btnStart.UseVisualStyleBackColor = false;
@@ -85,13 +90,13 @@
             // mainCamera
             // 
             this.mainCamera.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
-            this.mainCamera.Location = new System.Drawing.Point(38, 142);
-            this.mainCamera.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.mainCamera.Location = new System.Drawing.Point(25, 92);
             this.mainCamera.Name = "mainCamera";
-            this.mainCamera.Size = new System.Drawing.Size(1350, 782);
+            this.mainCamera.Size = new System.Drawing.Size(900, 508);
             this.mainCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.mainCamera.TabIndex = 2;
             this.mainCamera.TabStop = false;
+            this.mainCamera.Click += new System.EventHandler(this.mainCamera_Click);
             // 
             // MomentsPanel
             // 
@@ -99,22 +104,20 @@
             this.MomentsPanel.ColumnCount = 1;
             this.MomentsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.MomentsPanel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(56)))), ((int)(((byte)(56)))));
-            this.MomentsPanel.Location = new System.Drawing.Point(1416, 69);
-            this.MomentsPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MomentsPanel.Location = new System.Drawing.Point(944, 45);
             this.MomentsPanel.Name = "MomentsPanel";
             this.MomentsPanel.RowCount = 2;
             this.MomentsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.MomentsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.MomentsPanel.Size = new System.Drawing.Size(405, 900);
+            this.MomentsPanel.Size = new System.Drawing.Size(250, 585);
             this.MomentsPanel.TabIndex = 11;
             // 
             // folderLabel
             // 
             this.folderLabel.AutoSize = true;
-            this.folderLabel.Location = new System.Drawing.Point(1563, 985);
-            this.folderLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.folderLabel.Location = new System.Drawing.Point(1011, 690);
             this.folderLabel.Name = "folderLabel";
-            this.folderLabel.Size = new System.Drawing.Size(109, 20);
+            this.folderLabel.Size = new System.Drawing.Size(74, 13);
             this.folderLabel.TabIndex = 12;
             this.folderLabel.TabStop = true;
             this.folderLabel.Text = "Show in folder";
@@ -126,10 +129,9 @@
             this.cameraText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
             this.cameraText.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.cameraText.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.cameraText.Location = new System.Drawing.Point(38, 400);
-            this.cameraText.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cameraText.Location = new System.Drawing.Point(157, 270);
             this.cameraText.Name = "cameraText";
-            this.cameraText.Size = new System.Drawing.Size(1350, 20);
+            this.cameraText.Size = new System.Drawing.Size(900, 13);
             this.cameraText.TabIndex = 13;
             this.cameraText.Text = "Press the Start button to begin capturing";
             // 
@@ -138,39 +140,88 @@
             this.initTimer.Interval = 2000;
             this.initTimer.Tick += new System.EventHandler(this.initTimer_Tick);
             // 
-            // button1
+            // btnStop
             // 
-            this.button1.Location = new System.Drawing.Point(817, 932);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(199, 41);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnStop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.btnStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStop.ForeColor = System.Drawing.SystemColors.MenuBar;
+            this.btnStop.Location = new System.Drawing.Point(134, 3);
+            this.btnStop.Margin = new System.Windows.Forms.Padding(2);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(126, 23);
+            this.btnStop.TabIndex = 14;
+            this.btnStop.Text = "Stop Capturing";
+            this.btnStop.UseVisualStyleBackColor = false;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
+            // assistPicBox
+            // 
+            this.assistPicBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
+            this.assistPicBox.Location = new System.Drawing.Point(25, 91);
+            this.assistPicBox.Name = "assistPicBox";
+            this.assistPicBox.Size = new System.Drawing.Size(900, 508);
+            this.assistPicBox.TabIndex = 16;
+            this.assistPicBox.TabStop = false;
+            // 
+            // btnPanel
+            // 
+            this.btnPanel.Controls.Add(this.btnPause);
+            this.btnPanel.Controls.Add(this.btnStart);
+            this.btnPanel.Controls.Add(this.btnStop);
+            this.btnPanel.Location = new System.Drawing.Point(285, 605);
+            this.btnPanel.Name = "btnPanel";
+            this.btnPanel.Size = new System.Drawing.Size(396, 30);
+            this.btnPanel.TabIndex = 17;
+            // 
+            // btnPause
+            // 
+            this.btnPause.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.btnPause.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPause.ForeColor = System.Drawing.SystemColors.MenuBar;
+            this.btnPause.Location = new System.Drawing.Point(265, 3);
+            this.btnPause.Name = "btnPause";
+            this.btnPause.Size = new System.Drawing.Size(126, 23);
+            this.btnPause.TabIndex = 15;
+            this.btnPause.Text = "button2";
+            this.btnPause.UseVisualStyleBackColor = false;
+            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
+            // 
+            // c_selectPanel
+            // 
+            this.c_selectPanel.Controls.Add(this.cameraLabel);
+            this.c_selectPanel.Controls.Add(this.cboCamera);
+            this.c_selectPanel.Location = new System.Drawing.Point(330, 31);
+            this.c_selectPanel.Name = "c_selectPanel";
+            this.c_selectPanel.Size = new System.Drawing.Size(365, 30);
+            this.c_selectPanel.TabIndex = 18;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(58)))), ((int)(((byte)(58)))));
-            this.ClientSize = new System.Drawing.Size(1898, 944);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(1084, 730);
             this.Controls.Add(this.cameraText);
+            this.Controls.Add(this.c_selectPanel);
+            this.Controls.Add(this.btnPanel);
             this.Controls.Add(this.folderLabel);
             this.Controls.Add(this.MomentsPanel);
-            this.Controls.Add(this.btnStart);
-            this.Controls.Add(this.cameraLabel);
-            this.Controls.Add(this.cboCamera);
             this.Controls.Add(this.mainCamera);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Controls.Add(this.assistPicBox);
+            this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PostureCheck";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.ResizeBegin += new System.EventHandler(this.Form1_ResizeBegin);
+            this.ResizeEnd += new System.EventHandler(this.Form1_ResizeEnd);
             this.Resize += new System.EventHandler(this.Form1_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.mainCamera)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.assistPicBox)).EndInit();
+            this.btnPanel.ResumeLayout(false);
+            this.c_selectPanel.ResumeLayout(false);
+            this.c_selectPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -188,7 +239,11 @@
         private System.Windows.Forms.LinkLabel folderLabel;
         private System.Windows.Forms.RichTextBox cameraText;
         private System.Windows.Forms.Timer initTimer;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.PictureBox assistPicBox;
+        private System.Windows.Forms.Panel btnPanel;
+        private System.Windows.Forms.Panel c_selectPanel;
+        private System.Windows.Forms.Button btnPause;
     }
 }
 
