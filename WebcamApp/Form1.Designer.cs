@@ -39,6 +39,7 @@
             this.folderLabel = new System.Windows.Forms.LinkLabel();
             this.cameraText = new System.Windows.Forms.RichTextBox();
             this.initTimer = new System.Windows.Forms.Timer(this.components);
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.mainCamera)).BeginInit();
             this.SuspendLayout();
             // 
@@ -131,12 +132,21 @@
             this.cameraText.Size = new System.Drawing.Size(1350, 20);
             this.cameraText.TabIndex = 13;
             this.cameraText.Text = "Press the Start button to begin capturing";
-            this.cameraText.TextChanged += new System.EventHandler(this.cameraText_TextChanged);
             // 
             // initTimer
             // 
             this.initTimer.Interval = 2000;
             this.initTimer.Tick += new System.EventHandler(this.initTimer_Tick);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(817, 932);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(199, 41);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
@@ -145,6 +155,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(58)))), ((int)(((byte)(58)))));
             this.ClientSize = new System.Drawing.Size(1898, 944);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.cameraText);
             this.Controls.Add(this.folderLabel);
             this.Controls.Add(this.MomentsPanel);
@@ -177,6 +188,7 @@
         private System.Windows.Forms.LinkLabel folderLabel;
         private System.Windows.Forms.RichTextBox cameraText;
         private System.Windows.Forms.Timer initTimer;
+        private System.Windows.Forms.Button button1;
     }
 }
 
