@@ -21,7 +21,7 @@ namespace WebcamApp
         }
         void InitControls() {
             InitPictureBox();
-            InitLabel();
+            InitLabels();
         }
         void InitPictureBox()
         {
@@ -29,8 +29,11 @@ namespace WebcamApp
             myPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             myControls[0] = myPictureBox;
         }
-        void InitLabel() {
-            myLabel.Text = myDate.ToString("HH:mm:ss");
+        void InitLabels() {
+            myLabel.AutoSize = true;
+            myLabel.Text = $"Moment: {count + 1}" +
+                           "                               " + // heheheha
+                           $"Time: {myDate.ToString("HH:mm:ss")}";
             myControls[1] = myLabel;
         }
     }
