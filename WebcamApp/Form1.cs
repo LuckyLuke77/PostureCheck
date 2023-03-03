@@ -22,6 +22,7 @@ namespace WebcamApp
         FilterInfoCollection filterInfoCollection;
         VideoCaptureDevice videoCaptureDevice;
         bool cameraStarted = false;
+        bool videoPaused = false;
 
         private void VideoCaptureDevice_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
@@ -51,6 +52,7 @@ namespace WebcamApp
             mainCamera.Hide();
             Form1_Resize(sender, e);
             Form1_ResizeEnd(sender, e);
+            menuStrip1.Renderer = new ToolStripProfessionalRenderer(new ownColorTable());
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -128,6 +130,10 @@ namespace WebcamApp
             // Reposition show in folder label
             folderLabel.Top = MomentsPanel.Top + MomentsPanel.Height + 5;
             folderLabel.Left = MomentsPanel.Left;
+
+            // Reposition "No moments captured yet" text
+            noMomentsText.Top = MomentsPanel.Top + MomentsPanel.Height / 2 - noMomentsText.Height / 2;
+            noMomentsText.Left = MomentsPanel.Left +MomentsPanel.Width / 2 - noMomentsText.Width / 2;
         }
 
         // tick once to create the first moment
@@ -151,7 +157,7 @@ namespace WebcamApp
             mainCamera.Size = new Size(width, height);
             mainCamera.Left = assistPicBox.Left + (assistPicBox.Width - mainCamera.Width) / 2;
             mainCamera.Top = assistPicBox.Top + (assistPicBox.Height - mainCamera.Height) / 2;
-            if (cameraStarted) {
+            if (cameraStarted && !videoPaused) {
                 mainCamera.Show();
             }
         }
@@ -166,6 +172,7 @@ namespace WebcamApp
         {
             if (!cameraStarted)
             {
+                noMomentsText.Hide();
                 cameraStarted = true;
                 cameraText.Visible = false; // hide the "press start to begin..." text
                 videoCaptureDevice.Start(); // start the camera device
@@ -179,24 +186,57 @@ namespace WebcamApp
         //  STOP CAPTURING button
         private void btnStop_Click(object sender, EventArgs e)
         {
-            if (cameraStarted)
-            {
+            if (cameraStarted) {
+
+                if (videoPaused)
+                {
+                    videoPaused = false;
+                    btnPause.Text = "Pause Video";
+                }
+
+                cameraText.Text = "Press the \"Start Capturing\" button to begin capturing";
                 cameraStarted = false;
                 cameraText.Visible = true; // show the "press start to begin..." text
                 videoCaptureDevice.Stop(); // stop the camera device
                 captureTimer.Stop();       // stop the moments timer
-                mainCamera.Hide();
+                mainCamera.Hide();   
             }
         }
         //  PAUSE VIDEO button
         private void btnPause_Click(object sender, EventArgs e)
         {
-
+            if (cameraStarted && !videoPaused) {
+                videoPaused = true;
+                mainCamera.Hide();
+                cameraText.Visible = true;
+                cameraText.Text = "Video is paused. The camera is still capturing...";
+                btnPause.Text = "Resume Video";
+            } else if (cameraStarted && videoPaused) {
+                videoPaused = false;
+                mainCamera.Show();
+                cameraText.Visible = false;
+                btnPause.Text = "Pause Video";
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void cameraText_TextChanged(object sender, EventArgs e)
+        {
+            cameraText.SelectionAlignment = HorizontalAlignment.Center;
+        }
+
+        private void showCaptureFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("explorer.exe", MomentsDir()); // open file explorer inside the Moments folder
         }
     }
 }
