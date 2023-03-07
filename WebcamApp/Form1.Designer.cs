@@ -64,18 +64,20 @@
             // 
             this.cboCamera.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCamera.FormattingEnabled = true;
-            this.cboCamera.Location = new System.Drawing.Point(55, 6);
+            this.cboCamera.Location = new System.Drawing.Point(82, 9);
+            this.cboCamera.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cboCamera.Name = "cboCamera";
-            this.cboCamera.Size = new System.Drawing.Size(306, 21);
+            this.cboCamera.Size = new System.Drawing.Size(457, 28);
             this.cboCamera.TabIndex = 0;
             // 
             // cameraLabel
             // 
             this.cameraLabel.AutoSize = true;
             this.cameraLabel.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.cameraLabel.Location = new System.Drawing.Point(3, 9);
+            this.cameraLabel.Location = new System.Drawing.Point(4, 14);
+            this.cameraLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.cameraLabel.Name = "cameraLabel";
-            this.cameraLabel.Size = new System.Drawing.Size(46, 13);
+            this.cameraLabel.Size = new System.Drawing.Size(69, 20);
             this.cameraLabel.TabIndex = 1;
             this.cameraLabel.Text = "Camera:";
             // 
@@ -84,9 +86,10 @@
             this.btnStart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStart.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.btnStart.Location = new System.Drawing.Point(3, 3);
+            this.btnStart.Location = new System.Drawing.Point(4, 5);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(126, 23);
+            this.btnStart.Size = new System.Drawing.Size(189, 35);
             this.btnStart.TabIndex = 3;
             this.btnStart.Text = "Start Capturing";
             this.btnStart.UseVisualStyleBackColor = false;
@@ -100,9 +103,10 @@
             // mainCamera
             // 
             this.mainCamera.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
-            this.mainCamera.Location = new System.Drawing.Point(25, 92);
+            this.mainCamera.Location = new System.Drawing.Point(38, 142);
+            this.mainCamera.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.mainCamera.Name = "mainCamera";
-            this.mainCamera.Size = new System.Drawing.Size(900, 508);
+            this.mainCamera.Size = new System.Drawing.Size(1350, 782);
             this.mainCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.mainCamera.TabIndex = 2;
             this.mainCamera.TabStop = false;
@@ -114,19 +118,21 @@
             this.MomentsPanel.ColumnCount = 1;
             this.MomentsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.MomentsPanel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(56)))), ((int)(((byte)(56)))));
-            this.MomentsPanel.Location = new System.Drawing.Point(944, 45);
+            this.MomentsPanel.Location = new System.Drawing.Point(1416, 69);
+            this.MomentsPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MomentsPanel.Name = "MomentsPanel";
             this.MomentsPanel.RowCount = 1;
             this.MomentsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.MomentsPanel.Size = new System.Drawing.Size(250, 585);
+            this.MomentsPanel.Size = new System.Drawing.Size(375, 900);
             this.MomentsPanel.TabIndex = 11;
             // 
             // folderLabel
             // 
             this.folderLabel.AutoSize = true;
-            this.folderLabel.Location = new System.Drawing.Point(1011, 690);
+            this.folderLabel.Location = new System.Drawing.Point(1516, 1062);
+            this.folderLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.folderLabel.Name = "folderLabel";
-            this.folderLabel.Size = new System.Drawing.Size(74, 13);
+            this.folderLabel.Size = new System.Drawing.Size(109, 20);
             this.folderLabel.TabIndex = 12;
             this.folderLabel.TabStop = true;
             this.folderLabel.Text = "Show in folder";
@@ -138,10 +144,11 @@
             this.cameraText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
             this.cameraText.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.cameraText.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.cameraText.Location = new System.Drawing.Point(157, 270);
+            this.cameraText.Location = new System.Drawing.Point(236, 415);
+            this.cameraText.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cameraText.Name = "cameraText";
             this.cameraText.ReadOnly = true;
-            this.cameraText.Size = new System.Drawing.Size(900, 13);
+            this.cameraText.Size = new System.Drawing.Size(1350, 20);
             this.cameraText.TabIndex = 13;
             this.cameraText.Text = "Press the \"Start Capturing\" button to begin capturing";
             this.cameraText.TextChanged += new System.EventHandler(this.cameraText_TextChanged);
@@ -156,10 +163,9 @@
             this.btnStop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.btnStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStop.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.btnStop.Location = new System.Drawing.Point(134, 3);
-            this.btnStop.Margin = new System.Windows.Forms.Padding(2);
+            this.btnStop.Location = new System.Drawing.Point(201, 5);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(126, 23);
+            this.btnStop.Size = new System.Drawing.Size(189, 35);
             this.btnStop.TabIndex = 14;
             this.btnStop.Text = "Stop Capturing";
             this.btnStop.UseVisualStyleBackColor = false;
@@ -168,9 +174,10 @@
             // assistPicBox
             // 
             this.assistPicBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
-            this.assistPicBox.Location = new System.Drawing.Point(25, 91);
+            this.assistPicBox.Location = new System.Drawing.Point(38, 140);
+            this.assistPicBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.assistPicBox.Name = "assistPicBox";
-            this.assistPicBox.Size = new System.Drawing.Size(900, 508);
+            this.assistPicBox.Size = new System.Drawing.Size(1350, 782);
             this.assistPicBox.TabIndex = 16;
             this.assistPicBox.TabStop = false;
             // 
@@ -179,9 +186,10 @@
             this.btnPanel.Controls.Add(this.btnPause);
             this.btnPanel.Controls.Add(this.btnStart);
             this.btnPanel.Controls.Add(this.btnStop);
-            this.btnPanel.Location = new System.Drawing.Point(285, 605);
+            this.btnPanel.Location = new System.Drawing.Point(428, 931);
+            this.btnPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnPanel.Name = "btnPanel";
-            this.btnPanel.Size = new System.Drawing.Size(396, 30);
+            this.btnPanel.Size = new System.Drawing.Size(594, 46);
             this.btnPanel.TabIndex = 17;
             // 
             // btnPause
@@ -189,9 +197,10 @@
             this.btnPause.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.btnPause.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPause.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.btnPause.Location = new System.Drawing.Point(265, 3);
+            this.btnPause.Location = new System.Drawing.Point(398, 5);
+            this.btnPause.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnPause.Name = "btnPause";
-            this.btnPause.Size = new System.Drawing.Size(126, 23);
+            this.btnPause.Size = new System.Drawing.Size(189, 35);
             this.btnPause.TabIndex = 15;
             this.btnPause.Text = "Pause Video";
             this.btnPause.UseVisualStyleBackColor = false;
@@ -201,20 +210,23 @@
             // 
             this.c_selectPanel.Controls.Add(this.cameraLabel);
             this.c_selectPanel.Controls.Add(this.cboCamera);
-            this.c_selectPanel.Location = new System.Drawing.Point(330, 31);
+            this.c_selectPanel.Location = new System.Drawing.Point(495, 48);
+            this.c_selectPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.c_selectPanel.Name = "c_selectPanel";
-            this.c_selectPanel.Size = new System.Drawing.Size(365, 30);
+            this.c_selectPanel.Size = new System.Drawing.Size(548, 46);
             this.c_selectPanel.TabIndex = 18;
             // 
             // menuStrip1
             // 
             this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
+            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1084, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1626, 35);
             this.menuStrip1.TabIndex = 19;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -228,7 +240,7 @@
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuBar;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // settingsToolStripMenuItem
@@ -236,15 +248,16 @@
             this.settingsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
             this.settingsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuBar;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(280, 34);
             this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // showCaptureFolderToolStripMenuItem
             // 
             this.showCaptureFolderToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
             this.showCaptureFolderToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuBar;
             this.showCaptureFolderToolStripMenuItem.Name = "showCaptureFolderToolStripMenuItem";
-            this.showCaptureFolderToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.showCaptureFolderToolStripMenuItem.Size = new System.Drawing.Size(280, 34);
             this.showCaptureFolderToolStripMenuItem.Text = "Show Capture Folder";
             this.showCaptureFolderToolStripMenuItem.Click += new System.EventHandler(this.showCaptureFolderToolStripMenuItem_Click);
             // 
@@ -253,14 +266,14 @@
             this.toolStripSeparator1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
             this.toolStripSeparator1.ForeColor = System.Drawing.SystemColors.MenuBar;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(181, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(277, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
             this.exitToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuBar;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(280, 34);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -270,14 +283,14 @@
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuBar;
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(65, 29);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuBar;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(164, 34);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // noMomentsText
@@ -285,19 +298,20 @@
             this.noMomentsText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
             this.noMomentsText.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.noMomentsText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
-            this.noMomentsText.Location = new System.Drawing.Point(857, 27);
+            this.noMomentsText.Location = new System.Drawing.Point(1286, 42);
+            this.noMomentsText.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.noMomentsText.Name = "noMomentsText";
             this.noMomentsText.ReadOnly = true;
-            this.noMomentsText.Size = new System.Drawing.Size(68, 45);
+            this.noMomentsText.Size = new System.Drawing.Size(102, 69);
             this.noMomentsText.TabIndex = 20;
             this.noMomentsText.Text = "No moments captured yet";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(58)))), ((int)(((byte)(58)))));
-            this.ClientSize = new System.Drawing.Size(1084, 730);
+            this.ClientSize = new System.Drawing.Size(1626, 1050);
             this.Controls.Add(this.noMomentsText);
             this.Controls.Add(this.cameraText);
             this.Controls.Add(this.c_selectPanel);
@@ -308,7 +322,8 @@
             this.Controls.Add(this.assistPicBox);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(800, 600);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MinimumSize = new System.Drawing.Size(1189, 893);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PostureCheck";
@@ -335,7 +350,7 @@
         private System.Windows.Forms.Label cameraLabel;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Timer captureTimer;
-        private System.Windows.Forms.PictureBox mainCamera;
+        public System.Windows.Forms.PictureBox mainCamera;
         private System.ServiceProcess.ServiceController serviceController1;
         private System.Windows.Forms.TableLayoutPanel MomentsPanel;
         private System.Windows.Forms.LinkLabel folderLabel;

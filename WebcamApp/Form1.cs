@@ -238,5 +238,11 @@ namespace WebcamApp
         {
             System.Diagnostics.Process.Start("explorer.exe", MomentsDir()); // open file explorer inside the Moments folder
         }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsForm mySettings = new SettingsForm(this);
+            mySettings.Show();
+        }
     }
 }
