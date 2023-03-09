@@ -17,7 +17,6 @@ namespace WebcamApp
         public DateTime myDate = DateTime.Now;
         public Moment() {
             InitControls();
-            //allMoments[count] = this;
         }
         void InitControls() {
             InitPictureBox();
