@@ -349,7 +349,7 @@
         private System.Windows.Forms.ComboBox cboCamera;
         private System.Windows.Forms.Label cameraLabel;
         private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.Timer captureTimer;
+        public System.Windows.Forms.Timer captureTimer;
         public System.Windows.Forms.PictureBox mainCamera;
         private System.ServiceProcess.ServiceController serviceController1;
         private System.Windows.Forms.TableLayoutPanel MomentsPanel;

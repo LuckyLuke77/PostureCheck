@@ -18,7 +18,7 @@ namespace WebcamApp
         }
 
         private Form1 mainForm = null;
-        private readonly String[] imageSizeMode = { "Normal", "StretchImage", "AutoSize", "CenterImage", "Zoom" };
+        private readonly String[] imageSizeMode = {"StretchImage", "CenterImage", "Zoom" };
         public SettingsForm(Form callingForm)
         {
             mainForm = callingForm as Form1;
@@ -28,6 +28,7 @@ namespace WebcamApp
         {
             string currentSizeMode = this.mainForm.mainCamera.SizeMode.ToString();
             sizeModeSelector.SelectedIndex = Array.IndexOf(imageSizeMode, currentSizeMode);
+            comboBoxTimings.SelectedIndex = 0;
         }
 
         // change the SizeMode of the mainCamera to the once selected
@@ -35,17 +36,49 @@ namespace WebcamApp
         private void sizeModeSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
             string sizeModeSelected = imageSizeMode[sizeModeSelector.SelectedIndex];
-            if (sizeModeSelected == "Nomral") {
-                this.mainForm.mainCamera.SizeMode = PictureBoxSizeMode.Normal;
-            } else if (sizeModeSelected == "StretchImage") {
+            if (sizeModeSelected == "StretchImage") {
                 this.mainForm.mainCamera.SizeMode = PictureBoxSizeMode.StretchImage;
-            } else if (sizeModeSelected == "AutoSize") {
-                this.mainForm.mainCamera.SizeMode = PictureBoxSizeMode.AutoSize;
             } else if (sizeModeSelected == "CenterImage") {
                 this.mainForm.mainCamera.SizeMode = PictureBoxSizeMode.CenterImage;
             } else if (sizeModeSelected == "Zoom") {
                 this.mainForm.mainCamera.SizeMode = PictureBoxSizeMode.Zoom;
             }
+        }
+
+        private void cameraModeLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void stngTitleName_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBoxTimings_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxTimings.SelectedIndex == 0) // 5 seconds
+            {
+                this.mainForm.captureTimer.Interval = 5000;
+            } else if (comboBoxTimings.SelectedIndex == 1) // 30 seconds
+            {
+                this.mainForm.captureTimer.Interval = 30000;
+            }
+        }
+
+        private void stngButtonOk_Click(object sender, EventArgs e)
+        {
+           this.Close();
+        }
+
+        private void SettingsForm_Resize(object sender, EventArgs e)
+        {
+
+        }
+
+        private void stngTimerLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
