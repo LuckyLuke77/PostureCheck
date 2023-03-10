@@ -17,11 +17,11 @@ namespace WebcamApp
             InitializeComponent();
         }
 
-        private Form1 mainForm = null;
+        private MainForm mainForm = null;
         private readonly String[] imageSizeMode = {"StretchImage", "CenterImage", "Zoom" };
         public SettingsForm(Form callingForm)
         {
-            mainForm = callingForm as Form1;
+            mainForm = callingForm as MainForm;
             InitializeComponent();
         }
         private void SettingsForm_Load(object sender, EventArgs e)
@@ -44,17 +44,6 @@ namespace WebcamApp
                 this.mainForm.mainCamera.SizeMode = PictureBoxSizeMode.Zoom;
             }
         }
-
-        private void cameraModeLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void stngTitleName_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void comboBoxTimings_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxTimings.SelectedIndex == 0) // 5 seconds
@@ -71,12 +60,22 @@ namespace WebcamApp
            this.Close();
         }
 
+        // the dungeon
         private void SettingsForm_Resize(object sender, EventArgs e)
         {
 
         }
 
         private void stngTimerLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void cameraModeLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void stngTitleName_Click(object sender, EventArgs e)
         {
 
         }
