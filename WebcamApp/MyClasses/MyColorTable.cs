@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebcamApp
 {
-    public class ownColorTable : System.Windows.Forms.ProfessionalColorTable // Tooltrip coloring stuff
+    public class MyColorTable : System.Windows.Forms.ProfessionalColorTable // Tooltrip coloring stuff
     {
         public override Color MenuItemPressedGradientBegin
         {

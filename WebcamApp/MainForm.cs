@@ -12,9 +12,9 @@ using AForge.Video.DirectShow;
 
 namespace WebcamApp
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -33,14 +33,14 @@ namespace WebcamApp
         {
             // initialize the list of available cameras
             filterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-            foreach(FilterInfo filterInfo in filterInfoCollection)
+            foreach(FilterInfo filterInfo in filterInfoCollection) {
                 cboCamera.Items.Add(filterInfo.Name);
+            }
             cboCamera.SelectedIndex = 0;
 
             // initialiaze video capture stuff
-            videoCaptureDevice = new VideoCaptureDevice();
             videoCaptureDevice = new VideoCaptureDevice(filterInfoCollection[cboCamera.SelectedIndex].MonikerString);
-            videoCaptureDevice.NewFrame += VideoCaptureDevice_NewFrame;
+            videoCaptureDevice.NewFrame += new NewFrameEventHandler(VideoCaptureDevice_NewFrame);
 
             // initialize the apprearances of stuff
             btnStart.FlatAppearance.BorderSize = 0;
@@ -52,7 +52,7 @@ namespace WebcamApp
             mainCamera.Hide();
             Form1_Resize(sender, e);
             Form1_ResizeEnd(sender, e);
-            menuStrip1.Renderer = new ToolStripProfessionalRenderer(new ownColorTable());
+            menuStrip1.Renderer = new ToolStripProfessionalRenderer(new MyColorTable());
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -60,38 +60,18 @@ namespace WebcamApp
             if (videoCaptureDevice.IsRunning == true) {
                 videoCaptureDevice.Stop(); // stop the camera
             }
-            Directory.GetFiles(MomentsDir()).ToList().ForEach(File.Delete); // delete the contents of the Moments folder
+            Directory.GetFiles(Moment.SaveDirectory()).ToList().ForEach(File.Delete); // delete the contents of the Moments folder
         }
 
         private void captureTimer_Tick(object sender, EventArgs e)
         {
-            CreateMoment();
-        }
-
-        void CreateMoment() {
-            Moment.allMoments[Moment.count] = new Moment(); // create a new Moment object, and save it inside the allMoments list
-            Moment.allMoments[Moment.count].myPictureBox.Image = (Bitmap)mainCamera.Image.Clone(); // save the current camera frame to the object
-            MomentsPanel.Controls.Add(Moment.allMoments[Moment.count].myControls[0]); // add the image to the Moments panel
-            MomentsPanel.Controls.Add(Moment.allMoments[Moment.count].myControls[1]); // add the label to the Moments panel
-            MomentsPanel.VerticalScroll.Value = MomentsPanel.VerticalScroll.Maximum; // scroll to the bottom of the moments panel
-            mainCamera.Image.Save(MomentsDir() + $"{Moment.allMoments[Moment.count].myDate.ToString("HH_mm_ss")}.png"); // save the image inside the moments folder
-            Moment.count++;
+            Moment newMoment = new Moment();
+            newMoment.AddTo(this);
         }
 
         private void folderLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("explorer.exe", MomentsDir()); // open file explorer inside the Moments folder
-        }
-
-        // Get the path of the "Moments" folder
-        private String MomentsDir()
-        {
-            String localDir; 
-            localDir = AppContext.BaseDirectory; // gets the path, inluding \bin\debug\
-            int dirLen = localDir.Length;
-            localDir = localDir.Substring(0, dirLen - 10); // remove \bin\debug\ from the path
-            localDir += @"Moments\"; // add Moments\ to the path
-            return localDir;
+            System.Diagnostics.Process.Start("explorer.exe", Moment.SaveDirectory()); // open file explorer inside the Moments folder
         }
 
         // fancy resizing ratios to make me look smart
@@ -136,13 +116,6 @@ namespace WebcamApp
             noMomentsText.Left = MomentsPanel.Left +MomentsPanel.Width / 2 - noMomentsText.Width / 2;
         }
 
-        // tick once to create the first moment
-        private void initTimer_Tick(object sender, EventArgs e)
-        {
-            CreateMoment();
-            initTimer.Stop();
-        }
-
         private void Form1_ResizeBegin(object sender, EventArgs e)
         {
             mainCamera.Hide();
@@ -162,12 +135,7 @@ namespace WebcamApp
             }
         }
 
-        private void mainCamera_Click(object sender, EventArgs e)
-        {
-
-        }
-        // BUTTONS!
-        //  START CAPTURING button
+        // START CAPTURING button
         private void btnStart_Click(object sender, EventArgs e)
         {
             if (!cameraStarted)
@@ -177,13 +145,11 @@ namespace WebcamApp
                 cameraText.Visible = false; // hide the "press start to begin..." text
                 videoCaptureDevice.Start(); // start the camera device
                 captureTimer.Start();       // start the moments timer
-                initTimer.Start();          // start the timer that makes the initial capture
                 mainCamera.Show();
             }
-
         }
 
-        //  STOP CAPTURING button
+        // STOP CAPTURING button
         private void btnStop_Click(object sender, EventArgs e)
         {
             if (cameraStarted) {
@@ -202,7 +168,7 @@ namespace WebcamApp
                 mainCamera.Hide();   
             }
         }
-        //  PAUSE VIDEO button
+        // PAUSE VIDEO button
         private void btnPause_Click(object sender, EventArgs e)
         {
             if (cameraStarted && !videoPaused) {
@@ -224,11 +190,6 @@ namespace WebcamApp
             Application.Exit();
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
         private void cameraText_TextChanged(object sender, EventArgs e)
         {
             cameraText.SelectionAlignment = HorizontalAlignment.Center;
@@ -236,13 +197,24 @@ namespace WebcamApp
 
         private void showCaptureFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("explorer.exe", MomentsDir()); // open file explorer inside the Moments folder
+            System.Diagnostics.Process.Start("explorer.exe", Moment.SaveDirectory()); // open file explorer inside the Moments folder
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SettingsForm mySettings = new SettingsForm(this);
             mySettings.Show();
+        }
+
+        // dungeon
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void mainCamera_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
