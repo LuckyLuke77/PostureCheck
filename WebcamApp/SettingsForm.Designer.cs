@@ -29,13 +29,21 @@
         private void InitializeComponent()
         {
             this.sizeModeSelector = new System.Windows.Forms.ComboBox();
-            this.stngCameraModeLabel = new System.Windows.Forms.Label();
             this.stngPanel = new System.Windows.Forms.Panel();
-            this.stngTitleName = new System.Windows.Forms.Label();
-            this.stngTimerLabel = new System.Windows.Forms.Label();
+            this.groupBoxGeneral = new System.Windows.Forms.GroupBox();
+            this.txtSeconds = new System.Windows.Forms.Label();
+            this.inputCustomValue = new System.Windows.Forms.NumericUpDown();
+            this.btnCustomValue = new System.Windows.Forms.CheckBox();
             this.comboBoxTimings = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBoxCamera = new System.Windows.Forms.GroupBox();
+            this.txtSizeMode = new System.Windows.Forms.Label();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.stngButtonOk = new System.Windows.Forms.Button();
             this.stngPanel.SuspendLayout();
+            this.groupBoxGeneral.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.inputCustomValue)).BeginInit();
+            this.groupBoxCamera.SuspendLayout();
             this.SuspendLayout();
             // 
             // sizeModeSelector
@@ -46,61 +54,82 @@
             "Stretch Image",
             "Center Image",
             "Zoom"});
-            this.sizeModeSelector.Location = new System.Drawing.Point(202, 44);
-            this.sizeModeSelector.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sizeModeSelector.Location = new System.Drawing.Point(211, 39);
+            this.sizeModeSelector.Margin = new System.Windows.Forms.Padding(2);
             this.sizeModeSelector.Name = "sizeModeSelector";
-            this.sizeModeSelector.Size = new System.Drawing.Size(187, 21);
+            this.sizeModeSelector.Size = new System.Drawing.Size(242, 21);
             this.sizeModeSelector.TabIndex = 0;
             this.sizeModeSelector.SelectedIndexChanged += new System.EventHandler(this.sizeModeSelector_SelectedIndexChanged);
-            // 
-            // stngCameraModeLabel
-            // 
-            this.stngCameraModeLabel.AutoSize = true;
-            this.stngCameraModeLabel.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.stngCameraModeLabel.Location = new System.Drawing.Point(89, 47);
-            this.stngCameraModeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.stngCameraModeLabel.Name = "stngCameraModeLabel";
-            this.stngCameraModeLabel.Size = new System.Drawing.Size(93, 13);
-            this.stngCameraModeLabel.TabIndex = 1;
-            this.stngCameraModeLabel.Text = "Camera size mode";
-            this.stngCameraModeLabel.Click += new System.EventHandler(this.cameraModeLabel_Click);
             // 
             // stngPanel
             // 
             this.stngPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
+            this.stngPanel.Controls.Add(this.groupBoxGeneral);
+            this.stngPanel.Controls.Add(this.groupBoxCamera);
+            this.stngPanel.Controls.Add(this.btnCancel);
             this.stngPanel.Controls.Add(this.stngButtonOk);
-            this.stngPanel.Controls.Add(this.stngTitleName);
-            this.stngPanel.Controls.Add(this.comboBoxTimings);
-            this.stngPanel.Controls.Add(this.stngTimerLabel);
-            this.stngPanel.Controls.Add(this.stngCameraModeLabel);
-            this.stngPanel.Controls.Add(this.sizeModeSelector);
-            this.stngPanel.Location = new System.Drawing.Point(40, 30);
+            this.stngPanel.Location = new System.Drawing.Point(21, 22);
             this.stngPanel.Name = "stngPanel";
-            this.stngPanel.Size = new System.Drawing.Size(400, 400);
+            this.stngPanel.Size = new System.Drawing.Size(551, 336);
             this.stngPanel.TabIndex = 2;
             // 
-            // stngTitleName
+            // groupBoxGeneral
             // 
-            this.stngTitleName.AutoSize = true;
-            this.stngTitleName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.stngTitleName.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.stngTitleName.Location = new System.Drawing.Point(150, 0);
-            this.stngTitleName.Name = "stngTitleName";
-            this.stngTitleName.Size = new System.Drawing.Size(113, 31);
-            this.stngTitleName.TabIndex = 2;
-            this.stngTitleName.Text = "Settings";
-            this.stngTitleName.Click += new System.EventHandler(this.stngTitleName_Click);
+            this.groupBoxGeneral.Controls.Add(this.txtSeconds);
+            this.groupBoxGeneral.Controls.Add(this.inputCustomValue);
+            this.groupBoxGeneral.Controls.Add(this.btnCustomValue);
+            this.groupBoxGeneral.Controls.Add(this.comboBoxTimings);
+            this.groupBoxGeneral.Controls.Add(this.label1);
+            this.groupBoxGeneral.ForeColor = System.Drawing.SystemColors.MenuBar;
+            this.groupBoxGeneral.Location = new System.Drawing.Point(12, 14);
+            this.groupBoxGeneral.Name = "groupBoxGeneral";
+            this.groupBoxGeneral.Size = new System.Drawing.Size(518, 141);
+            this.groupBoxGeneral.TabIndex = 10;
+            this.groupBoxGeneral.TabStop = false;
+            this.groupBoxGeneral.Text = "General";
             // 
-            // stngTimerLabel
+            // txtSeconds
             // 
-            this.stngTimerLabel.AutoSize = true;
-            this.stngTimerLabel.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.stngTimerLabel.Location = new System.Drawing.Point(48, 95);
-            this.stngTimerLabel.Name = "stngTimerLabel";
-            this.stngTimerLabel.Size = new System.Drawing.Size(134, 13);
-            this.stngTimerLabel.TabIndex = 3;
-            this.stngTimerLabel.Text = "Moment capture frequency";
-            this.stngTimerLabel.Click += new System.EventHandler(this.stngTimerLabel_Click);
+            this.txtSeconds.AutoSize = true;
+            this.txtSeconds.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.txtSeconds.Location = new System.Drawing.Point(404, 78);
+            this.txtSeconds.Name = "txtSeconds";
+            this.txtSeconds.Size = new System.Drawing.Size(49, 13);
+            this.txtSeconds.TabIndex = 13;
+            this.txtSeconds.Text = "Seconds";
+            // 
+            // inputCustomValue
+            // 
+            this.inputCustomValue.Location = new System.Drawing.Point(308, 76);
+            this.inputCustomValue.Maximum = new decimal(new int[] {
+            86400,
+            0,
+            0,
+            0});
+            this.inputCustomValue.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.inputCustomValue.Name = "inputCustomValue";
+            this.inputCustomValue.Size = new System.Drawing.Size(90, 20);
+            this.inputCustomValue.TabIndex = 12;
+            this.inputCustomValue.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // btnCustomValue
+            // 
+            this.btnCustomValue.AutoSize = true;
+            this.btnCustomValue.Location = new System.Drawing.Point(211, 79);
+            this.btnCustomValue.Name = "btnCustomValue";
+            this.btnCustomValue.Size = new System.Drawing.Size(91, 17);
+            this.btnCustomValue.TabIndex = 11;
+            this.btnCustomValue.Text = "Custom Value";
+            this.btnCustomValue.UseVisualStyleBackColor = true;
+            this.btnCustomValue.CheckedChanged += new System.EventHandler(this.btnCustomValue_CheckedChanged_1);
             // 
             // comboBoxTimings
             // 
@@ -112,18 +141,59 @@
             "60 seconds",
             "5 minutes",
             "10 minutes",
-            "30 minutes",
-            "1 hour"});
-            this.comboBoxTimings.Location = new System.Drawing.Point(202, 92);
+            "30 minutes"});
+            this.comboBoxTimings.Location = new System.Drawing.Point(211, 42);
             this.comboBoxTimings.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxTimings.Name = "comboBoxTimings";
-            this.comboBoxTimings.Size = new System.Drawing.Size(187, 21);
+            this.comboBoxTimings.Size = new System.Drawing.Size(242, 21);
             this.comboBoxTimings.TabIndex = 4;
-            this.comboBoxTimings.SelectedIndexChanged += new System.EventHandler(this.comboBoxTimings_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.SystemColors.MenuBar;
+            this.label1.Location = new System.Drawing.Point(57, 45);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(138, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Moment Capture Frequency";
+            // 
+            // groupBoxCamera
+            // 
+            this.groupBoxCamera.Controls.Add(this.sizeModeSelector);
+            this.groupBoxCamera.Controls.Add(this.txtSizeMode);
+            this.groupBoxCamera.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxCamera.ForeColor = System.Drawing.SystemColors.MenuBar;
+            this.groupBoxCamera.Location = new System.Drawing.Point(12, 171);
+            this.groupBoxCamera.Name = "groupBoxCamera";
+            this.groupBoxCamera.Size = new System.Drawing.Size(518, 100);
+            this.groupBoxCamera.TabIndex = 9;
+            this.groupBoxCamera.TabStop = false;
+            this.groupBoxCamera.Text = "Camera";
+            // 
+            // txtSizeMode
+            // 
+            this.txtSizeMode.AutoSize = true;
+            this.txtSizeMode.ForeColor = System.Drawing.SystemColors.MenuBar;
+            this.txtSizeMode.Location = new System.Drawing.Point(99, 42);
+            this.txtSizeMode.Name = "txtSizeMode";
+            this.txtSizeMode.Size = new System.Drawing.Size(96, 13);
+            this.txtSizeMode.TabIndex = 7;
+            this.txtSizeMode.Text = "Camera Size Mode";
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(440, 291);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 6;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // stngButtonOk
             // 
-            this.stngButtonOk.Location = new System.Drawing.Point(165, 364);
+            this.stngButtonOk.Location = new System.Drawing.Point(359, 291);
             this.stngButtonOk.Name = "stngButtonOk";
             this.stngButtonOk.Size = new System.Drawing.Size(75, 23);
             this.stngButtonOk.TabIndex = 5;
@@ -136,18 +206,21 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(58)))), ((int)(((byte)(58)))));
-            this.ClientSize = new System.Drawing.Size(484, 461);
+            this.ClientSize = new System.Drawing.Size(589, 382);
             this.Controls.Add(this.stngPanel);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.MaximumSize = new System.Drawing.Size(500, 500);
-            this.MinimumSize = new System.Drawing.Size(500, 500);
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximumSize = new System.Drawing.Size(605, 421);
+            this.MinimumSize = new System.Drawing.Size(605, 421);
             this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.SettingsForm_Load);
-            this.Resize += new System.EventHandler(this.SettingsForm_Resize);
             this.stngPanel.ResumeLayout(false);
-            this.stngPanel.PerformLayout();
+            this.groupBoxGeneral.ResumeLayout(false);
+            this.groupBoxGeneral.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.inputCustomValue)).EndInit();
+            this.groupBoxCamera.ResumeLayout(false);
+            this.groupBoxCamera.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -155,11 +228,16 @@
         #endregion
 
         private System.Windows.Forms.ComboBox sizeModeSelector;
-        private System.Windows.Forms.Label stngCameraModeLabel;
         private System.Windows.Forms.Panel stngPanel;
-        private System.Windows.Forms.Label stngTitleName;
-        private System.Windows.Forms.Label stngTimerLabel;
         private System.Windows.Forms.ComboBox comboBoxTimings;
         private System.Windows.Forms.Button stngButtonOk;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label txtSizeMode;
+        private System.Windows.Forms.GroupBox groupBoxGeneral;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBoxCamera;
+        private System.Windows.Forms.CheckBox btnCustomValue;
+        private System.Windows.Forms.NumericUpDown inputCustomValue;
+        private System.Windows.Forms.Label txtSeconds;
     }
 }
