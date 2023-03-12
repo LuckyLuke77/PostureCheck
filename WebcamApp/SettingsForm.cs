@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WebcamApp.Properties;
 
 namespace WebcamApp
 {
@@ -18,7 +19,7 @@ namespace WebcamApp
         }
 
         private MainForm mainForm = null;
-        private readonly String[] imageSizeMode = {"StretchImage", "CenterImage", "Zoom" };
+        private readonly String[] cameraSizeMode = {"StretchImage", "CenterImage", "Zoom" };
         public SettingsForm(Form callingForm)
         {
             mainForm = callingForm as MainForm;
@@ -26,16 +27,23 @@ namespace WebcamApp
         }
         private void SettingsForm_Load(object sender, EventArgs e)
         {
-            string currentSizeMode = this.mainForm.mainCamera.SizeMode.ToString();
-            sizeModeSelector.SelectedIndex = Array.IndexOf(imageSizeMode, currentSizeMode);
-            comboBoxTimings.SelectedIndex = 0;
+            string currentSizeMode = mainForm.mainCamera.SizeMode.ToString(); // Gets the active camera SizeMode
+            sizeModeSelector.SelectedIndex = Array.IndexOf(cameraSizeMode, currentSizeMode); // Finds the index of the aforementioned camera SizeMode inside the cameraSizeMode array
+            //comboBoxTimings.SelectedIndex = 0;
+
+            // Moment Capture Frequency button shenanigans
+            btnCustomValue.Checked = (bool)Settings.Default["CustomValueButton"];
+            inputCustomValue.Enabled = (bool)Settings.Default["CustomValueButton"];
+            comboBoxTimings.Enabled = !(bool)Settings.Default["CustomValueButton"];
+            inputCustomValue.Value = (int)Settings.Default["CustomMomentCaptureFrequency"];
+            comboBoxTimings.SelectedIndex = (int)Settings.Default["MomentCaptureFrequencyIndex"];
         }
 
         // change the SizeMode of the mainCamera to the once selected
         // disgusting code, but its the only way I could make it kinda work
         private void sizeModeSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string sizeModeSelected = imageSizeMode[sizeModeSelector.SelectedIndex];
+            string sizeModeSelected = cameraSizeMode[sizeModeSelector.SelectedIndex];
             if (sizeModeSelected == "StretchImage") {
                 this.mainForm.mainCamera.SizeMode = PictureBoxSizeMode.StretchImage;
             } else if (sizeModeSelected == "CenterImage") {
@@ -44,40 +52,48 @@ namespace WebcamApp
                 this.mainForm.mainCamera.SizeMode = PictureBoxSizeMode.Zoom;
             }
         }
-        private void comboBoxTimings_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBoxTimings.SelectedIndex == 0) // 5 seconds
-            {
-                this.mainForm.captureTimer.Interval = 5000;
-            } else if (comboBoxTimings.SelectedIndex == 1) // 30 seconds
-            {
-                this.mainForm.captureTimer.Interval = 30000;
-            }
-        }
 
         private void stngButtonOk_Click(object sender, EventArgs e)
         {
-           this.Close();
+            Settings.Default["CameraSizeMode"] = sizeModeSelector.SelectedItem.ToString(); // save the camera size mode
+            Settings.Default["CustomMomentCaptureFrequency"] = (int)inputCustomValue.Value; // save the custom moment capture frequency
+            Settings.Default["CustomValueButton"] = btnCustomValue.Checked; // save the custom moment capture frequency button state
+            Settings.Default["MomentCaptureFrequencyIndex"] = comboBoxTimings.SelectedIndex;
+            Settings.Default.Save();
+            mainForm.captureTimer.Interval = GetMomentCaptureFrequency();
+            this.Close();
         }
-
-        // the dungeon
-        private void SettingsForm_Resize(object sender, EventArgs e)
+        public static int GetMomentCaptureFrequency()
         {
-
+            if ((bool)Settings.Default["CustomValueButton"])
+            {
+                return (int)Settings.Default["CustomMomentCaptureFrequency"] * 1000; // interval is in milliseconds, and the input is in seconds, so i mutluply by 1000
+            }
+            else
+            {
+                if ((int)Settings.Default["MomentCaptureFrequencyIndex"] == 0) { // 5 seconds
+                    return 5000;
+                } else if ((int)Settings.Default["MomentCaptureFrequencyIndex"] == 1) { // 30 seconds
+                    return 30000;
+                } else if ((int)Settings.Default["MomentCaptureFrequencyIndex"] == 2) { // 60 seconds
+                    return 60000;
+                } else if ((int)Settings.Default["MomentCaptureFrequencyIndex"] == 3) { // 5 min
+                    return 300000;
+                } else if ((int)Settings.Default["MomentCaptureFrequencyIndex"] == 4) { // 10 min
+                    return 600000;
+                } else { // 30 min
+                    return 1800000;
+                }
+            }
         }
-
-        private void stngTimerLabel_Click(object sender, EventArgs e)
+        private void btnCancel_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
-        private void cameraModeLabel_Click(object sender, EventArgs e)
+        private void btnCustomValue_CheckedChanged_1(object sender, EventArgs e)
         {
-
-        }
-
-        private void stngTitleName_Click(object sender, EventArgs e)
-        {
-
+            inputCustomValue.Enabled = !inputCustomValue.Enabled;
+            comboBoxTimings.Enabled = !comboBoxTimings.Enabled;
         }
     }
 }
