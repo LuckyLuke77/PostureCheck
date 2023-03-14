@@ -16,36 +16,19 @@ namespace WebcamApp
             InitializeComponent();
         }
 
-        FilterInfoCollection filterInfoCollection;
-        VideoCaptureDevice videoCaptureDevice;
         bool cameraStarted = false;
         bool videoPaused = false;
-        //int t = 0;
 
-        private void VideoCaptureDevice_NewFrame(object sender, NewFrameEventArgs eventArgs)
-        {
-            if (mainCamera.Image != null) mainCamera.Image.Dispose();
-            mainCamera.Image = (Bitmap)eventArgs.Frame.Clone();
-            //t++;
-            //Console.WriteLine($"{t}");
-        }
         private void Form1_Load(object sender, EventArgs e)
         {
             // TODO: -add bar at the bottom that has camera/timer interval info (like obs !)
             //       -move camera combo bot to settings form
-            //       -move this stuff to the settings/camera classes
+            //       -save selected camera index to settings
+            //       -handle exception when there are no available cameras(?)
 
             // initialize the list of available cameras
-            filterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-            foreach (FilterInfo filterInfo in filterInfoCollection)
-            {
-                cboCamera.Items.Add(filterInfo.Name);
-            }
-            cboCamera.SelectedIndex = 0;
+            Camera.InitCameras(this);
 
-            // initialiaze video capture stuff
-            videoCaptureDevice = new VideoCaptureDevice(filterInfoCollection[cboCamera.SelectedIndex].MonikerString);
-            videoCaptureDevice.NewFrame += new NewFrameEventHandler(VideoCaptureDevice_NewFrame);
 
             // initialize the apprearances of stuff
             btnStart.FlatAppearance.BorderSize = 0;
@@ -66,9 +49,9 @@ namespace WebcamApp
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (videoCaptureDevice.IsRunning == true)
+            if (Camera.IsRunning() == true)
             {
-                videoCaptureDevice.Stop(); // stop the camera
+                Camera.Stop(); // stop the camera
             }
             Directory.GetFiles(Moment.SaveDirectory()).ToList().ForEach(File.Delete); // delete the contents of the Moments folder
         }
@@ -105,17 +88,13 @@ namespace WebcamApp
             btnPanel.Left = assistPicBox.Left + assistPicBox.Width / 2 - btnPanel.Width / 2;
             btnPanel.Top = assistPicBox.Top + assistPicBox.Height + 10;
 
-            // Reposition camera select panel
-            c_selectPanel.Left = assistPicBox.Left + assistPicBox.Width / 2 - c_selectPanel.Width / 2;
-            c_selectPanel.Top = assistPicBox.Top - c_selectPanel.Height - 5;
-
             // Resize MomentsPanel
             //  position
-            MomentsPanel.Top = c_selectPanel.Top;
+            //MomentsPanel.Top = assistPicBox.Top + 35;
             MomentsPanel.Left = assistPicBox.Left * 2 + assistPicBox.Width;
             //  size
             MomentsPanel.Width = 250;
-            MomentsPanel.Height = btnPanel.Top - c_selectPanel.Top + btnPanel.Height;
+            MomentsPanel.Height = btnPanel.Top - + btnPanel.Height;
 
             // Reposition show in folder label
             folderLabel.Top = MomentsPanel.Top + MomentsPanel.Height + 5;
@@ -154,7 +133,7 @@ namespace WebcamApp
                 noMomentsText.Hide();
                 cameraStarted = true;
                 cameraText.Visible = false; // hide the "press start to begin..." text
-                videoCaptureDevice.Start(); // start the camera device
+                Camera.Start(); // start the camera device
                 captureTimer.Start();       // start the moments timer
                 mainCamera.Show();
             }
@@ -175,7 +154,7 @@ namespace WebcamApp
                 cameraText.Text = "Press the \"Start Capturing\" button to begin capturing";
                 cameraStarted = false;
                 cameraText.Visible = true; // show the "press start to begin..." text
-                videoCaptureDevice.Stop(); // stop the camera device
+                Camera.Stop(); // stop the camera device
                 captureTimer.Stop();       // stop the moments timer
                 mainCamera.Hide();
             }

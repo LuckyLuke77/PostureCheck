@@ -37,6 +37,13 @@ namespace WebcamApp
             comboBoxTimings.Enabled = !(bool)Settings.Default["CustomValueButton"];
             inputCustomValue.Value = (int)Settings.Default["CustomMomentCaptureFrequency"];
             comboBoxTimings.SelectedIndex = (int)Settings.Default["MomentCaptureFrequencyIndex"];
+
+            // selected camera stuff
+            Camera.InitSettings(cboCameras);
+
+            //button apearance
+            btnCancel.FlatAppearance.BorderSize = 0;
+            btnOk.FlatAppearance.BorderSize = 0;
         }
 
         // change the SizeMode of the mainCamera to the once selected
@@ -94,6 +101,11 @@ namespace WebcamApp
         {
             inputCustomValue.Enabled = !inputCustomValue.Enabled;
             comboBoxTimings.Enabled = !comboBoxTimings.Enabled;
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
