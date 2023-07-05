@@ -48,6 +48,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noMomentsText = new System.Windows.Forms.RichTextBox();
+            this.searchCameraTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.mainCamera)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.assistPicBox)).BeginInit();
             this.btnPanel.SuspendLayout();
@@ -242,6 +243,11 @@
             this.noMomentsText.TabIndex = 20;
             this.noMomentsText.Text = "No moments captured yet";
             // 
+            // searchCameraTimer
+            // 
+            this.searchCameraTimer.Interval = 500;
+            this.searchCameraTimer.Tick += new System.EventHandler(this.searchCameraTimer_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -283,7 +289,7 @@
         private System.ServiceProcess.ServiceController serviceController1;
         public System.Windows.Forms.TableLayoutPanel MomentsPanel;
         private System.Windows.Forms.LinkLabel folderLabel;
-        private System.Windows.Forms.RichTextBox cameraText;
+        public System.Windows.Forms.RichTextBox cameraText;
         private System.Windows.Forms.PictureBox assistPicBox;
         private System.Windows.Forms.Panel btnPanel;
         private System.Windows.Forms.Button btnPause;
@@ -296,6 +302,7 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.RichTextBox noMomentsText;
+        private System.Windows.Forms.Timer searchCameraTimer;
     }
 }
 

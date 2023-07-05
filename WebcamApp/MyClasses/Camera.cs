@@ -16,13 +16,21 @@ namespace WebcamApp
         static VideoCaptureDevice videoCaptureDevice;
         static private MainForm mainForm;
         static public Bitmap newFrame;
+        static public bool initialized;
 
         static public void InitCameras(MainForm caller)
         {
             mainForm = caller;
             filterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-            videoCaptureDevice = new VideoCaptureDevice(filterInfoCollection[0].MonikerString);
-            videoCaptureDevice.NewFrame += new NewFrameEventHandler(VideoCaptureDevice_NewFrame);
+            try {
+                videoCaptureDevice = new VideoCaptureDevice(filterInfoCollection[0].MonikerString);
+                videoCaptureDevice.NewFrame += new NewFrameEventHandler(VideoCaptureDevice_NewFrame);
+                mainForm.cameraText.Text =  "Press the \"Start Capturing\" button to begin capturing";
+                initialized = true;
+            } catch {
+                mainForm.cameraText.Text = "Error: Could not find a web camera";
+                initialized = false;
+            }
         }
 
         static private void VideoCaptureDevice_NewFrame(object sender, NewFrameEventArgs eventArgs)
@@ -37,28 +45,38 @@ namespace WebcamApp
         }
         static public void Start()
         {
-            videoCaptureDevice.Start();
+            if (initialized) {
+                videoCaptureDevice.Start(); 
+            }
         }
 
         static public void Stop()
         {
-            videoCaptureDevice.Stop();
+            if (initialized) {
+                videoCaptureDevice.Stop(); 
+            }
         }
 
         static public bool IsRunning()
         {
-            return videoCaptureDevice.IsRunning;
+            if (initialized)
+            {
+                return videoCaptureDevice.IsRunning;
+            }
+            return false;
         }
 
         // Called when the settings form is loaded
         // fills the available camera combo box and selects the saved index
         static public void InitSettings(ComboBox cbo) 
         {
-            foreach (FilterInfo filterInfo in filterInfoCollection)
-            {
-                cbo.Items.Add(filterInfo.Name);
-            }
-            cbo.SelectedIndex = (int)Settings.Default["SelectedCameraIndex"];
+            if (initialized) {
+                foreach (FilterInfo filterInfo in filterInfoCollection)
+                {
+                    cbo.Items.Add(filterInfo.Name);
+                }
+                cbo.SelectedIndex = (int)Settings.Default["SelectedCameraIndex"];
+            }         
         }
         static public void SetSizeMode(MainForm mainForm) {
             string savedSizeMode = Settings.Default["CameraSizeMode"].ToString();

@@ -18,16 +18,14 @@ namespace WebcamApp
 
         bool cameraStarted = false;
         bool videoPaused = false;
-
         private void Form1_Load(object sender, EventArgs e)
         {
-            // TODO: -remove "stop capturing" button and put that funcionality on "Start capturing" button (like obs!)
-            //       -move camera combo bot to settings form
-            //       -save selected camera index to settings
-            //       -handle exception when there are no available cameras(?)
 
-            // initialize the list of available cameras
+            // try to initialize the list of available cameras
             Camera.InitCameras(this);
+
+            searchCameraTimer.Start();
+
 
 
             // initialize the apprearances of stuff
@@ -52,7 +50,7 @@ namespace WebcamApp
             {
                 Camera.Stop(); // stop the camera
             }
-            Directory.GetFiles(Moment.SaveDirectory()).ToList().ForEach(File.Delete); // delete the contents of the Moments folder
+            Directory.GetFiles(Moment.SaveDirectory()).ToList().ForEach(File.Delete); // delete the contents of the Moments folder  
         }
 
         private void captureTimer_Tick(object sender, EventArgs e)
@@ -102,6 +100,12 @@ namespace WebcamApp
             // Reposition "No moments captured yet" text
             noMomentsText.Top = MomentsPanel.Top + MomentsPanel.Height / 2 - noMomentsText.Height / 2;
             noMomentsText.Left = MomentsPanel.Left + MomentsPanel.Width / 2 - noMomentsText.Width / 2;
+            
+            if (Camera.IsRunning() && WindowState == FormWindowState.Maximized)
+            {
+                Form1_ResizeEnd(sender, e);
+            }
+             
         }
 
         private void Form1_ResizeBegin(object sender, EventArgs e)
@@ -127,37 +131,39 @@ namespace WebcamApp
         // START CAPTURING button
         private void btnStart_Click(object sender, EventArgs e)
         {
-            if (!cameraStarted)
+            if (Camera.initialized)
             {
-                noMomentsText.Hide();
-                cameraStarted = true;
-                cameraText.Visible = false; // hide the "press start to begin..." text
-                Camera.Start(); // start the camera device
-                captureTimer.Start();       // start the moments timer
-                mainCamera.Show();
+                if (!cameraStarted)
+                {
+                    noMomentsText.Hide();
+                    cameraStarted = true;
+                    cameraText.Visible = false; // hide the "press start to begin..." text
+                    Camera.Start(); // start the camera device
+                    captureTimer.Start();       // start the moments timer
+                    mainCamera.Show();
 
-                btnStart.Text = "Stop Capturing";
-                btnStart.BackColor = Color.Blue;
-            } else {
+                    btnStart.Text = "Stop Capturing";
+                    btnStart.BackColor = Color.Blue;
+                } else {
+                    btnStart.Text = "Stopping Capturing...";
+                    btnStart.BackColor = Color.FromArgb(76, 76, 76);
 
-                btnStart.Text = "Stopping Capturing...";
-                btnStart.BackColor = Color.FromArgb(76, 76, 76);
+                    if (videoPaused)
+                    {
+                        videoPaused = false;
+                        btnPause.Text = "Pause Video";
+                    }
+                    cameraText.Text = "Press the \"Start Capturing\" button to begin capturing";
+                    cameraStarted = false;
+                    cameraText.Visible = true; // show the "press start to begin..." text
+                    Camera.Stop(); // stop the camera device
+                    captureTimer.Stop();       // stop the moments timer
+                    mainCamera.Hide();
 
-                if (videoPaused) {
-                    videoPaused = false;
-                    btnPause.Text = "Pause Video";
+                    btnStart.Text = "Start Capturing";
+                    btnStart.BackColor = Color.FromArgb(76, 76, 76);
                 }
-
-                cameraText.Text = "Press the \"Start Capturing\" button to begin capturing";
-                cameraStarted = false;
-                cameraText.Visible = true; // show the "press start to begin..." text
-                Camera.Stop(); // stop the camera device
-                captureTimer.Stop();       // stop the moments timer
-                mainCamera.Hide();
-
-                btnStart.Text = "Start Capturing";
-                btnStart.BackColor = Color.FromArgb(76, 76, 76);
-            }
+            }      
         }
 
         // PAUSE VIDEO button
@@ -220,6 +226,13 @@ namespace WebcamApp
         private void btnPanel_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void searchCameraTimer_Tick(object sender, EventArgs e)
+        {
+            if (!Camera.initialized) { 
+                Camera.InitCameras(this);
+            }
         }
     }
 }
