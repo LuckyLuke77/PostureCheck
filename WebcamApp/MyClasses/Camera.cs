@@ -22,15 +22,9 @@ namespace WebcamApp
         {
             mainForm = caller;
             filterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-            try {
-                videoCaptureDevice = new VideoCaptureDevice(filterInfoCollection[0].MonikerString);
-                videoCaptureDevice.NewFrame += new NewFrameEventHandler(VideoCaptureDevice_NewFrame);
-                mainForm.cameraText.Text =  "Press the \"Start Capturing\" button to begin capturing";
-                initialized = true;
-            } catch {
-                mainForm.cameraText.Text = "Error: Could not find a web camera";
-                initialized = false;
-            }
+            videoCaptureDevice = new VideoCaptureDevice(filterInfoCollection[0].MonikerString);
+            videoCaptureDevice.NewFrame += new NewFrameEventHandler(VideoCaptureDevice_NewFrame);
+
         }
 
         static private void VideoCaptureDevice_NewFrame(object sender, NewFrameEventArgs eventArgs)
@@ -45,21 +39,21 @@ namespace WebcamApp
         }
         static public void Start()
         {
-            if (initialized) {
+            if (Found()) {
                 videoCaptureDevice.Start(); 
             }
         }
 
         static public void Stop()
         {
-            if (initialized) {
+            if (Found()) {
                 videoCaptureDevice.Stop(); 
             }
         }
 
         static public bool IsRunning()
         {
-            if (initialized)
+            if (Found())
             {
                 return videoCaptureDevice.IsRunning;
             }
@@ -70,7 +64,7 @@ namespace WebcamApp
         // fills the available camera combo box and selects the saved index
         static public void InitSettings(ComboBox cbo) 
         {
-            if (initialized) {
+            if (Found()) {
                 foreach (FilterInfo filterInfo in filterInfoCollection)
                 {
                     cbo.Items.Add(filterInfo.Name);
@@ -92,6 +86,13 @@ namespace WebcamApp
             {
                 mainForm.mainCamera.SizeMode = PictureBoxSizeMode.Zoom;
             }
+        }
+        static public bool Found() {
+            filterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+            if (filterInfoCollection.Count == 0) {
+                return false;
+            }
+            return true;
         }
     }
 }
