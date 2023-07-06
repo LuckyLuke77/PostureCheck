@@ -22,8 +22,8 @@ namespace WebcamApp
         {
 
             // try to initialize the list of available cameras
-            Camera.InitCameras(this);
-
+            //Camera.InitCameras(this);
+            searchCameraTimer_Tick(sender, e);
             searchCameraTimer.Start();
 
 
@@ -131,7 +131,7 @@ namespace WebcamApp
         // START CAPTURING button
         private void btnStart_Click(object sender, EventArgs e)
         {
-            if (Camera.initialized)
+            if (Camera.Found())
             {
                 if (!cameraStarted)
                 {
@@ -145,23 +145,7 @@ namespace WebcamApp
                     btnStart.Text = "Stop Capturing";
                     btnStart.BackColor = Color.Blue;
                 } else {
-                    btnStart.Text = "Stopping Capturing...";
-                    btnStart.BackColor = Color.FromArgb(76, 76, 76);
-
-                    if (videoPaused)
-                    {
-                        videoPaused = false;
-                        btnPause.Text = "Pause Video";
-                    }
-                    cameraText.Text = "Press the \"Start Capturing\" button to begin capturing";
-                    cameraStarted = false;
-                    cameraText.Visible = true; // show the "press start to begin..." text
-                    Camera.Stop(); // stop the camera device
-                    captureTimer.Stop();       // stop the moments timer
-                    mainCamera.Hide();
-
-                    btnStart.Text = "Start Capturing";
-                    btnStart.BackColor = Color.FromArgb(76, 76, 76);
+                    StopCapturing();
                 }
             }      
         }
@@ -206,7 +190,43 @@ namespace WebcamApp
             SettingsForm mySettings = new SettingsForm(this);
             mySettings.Show();
         }
+        private void searchCameraTimer_Tick(object sender, EventArgs e)
+        {
+            if (Camera.Found())
+            {
+                Camera.InitCameras(this);
+                if (videoPaused == false){
+                    cameraText.Text = "Press the \"Start Capturing\" button to begin capturing";
+                } else {
+                    cameraText.Text = "Video is paused. The camera is still capturing...";
+                }
+            }
+            else
+            {
+                StopCapturing();
+                cameraText.Text = "Error: Could not find a web camera";
+            }
+        }
+        private void StopCapturing()
+        {
+            btnStart.Text = "Stopping Capturing...";
+            btnStart.BackColor = Color.FromArgb(88, 88, 88);
 
+            if (videoPaused)
+            {
+                videoPaused = false;
+                btnPause.Text = "Pause Video";
+            }
+            //cameraText.Text = "Error: Could not find a web camera";
+            cameraStarted = false;
+            cameraText.Visible = true; // show the "press start to begin..." text
+            Camera.Stop(); // stop the camera device
+            captureTimer.Stop();       // stop the moments timer
+            mainCamera.Hide();
+
+            btnStart.Text = "Start Capturing";
+            btnStart.BackColor = Color.FromArgb(88, 88, 88);
+        }
         // dungeon
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
@@ -226,13 +246,6 @@ namespace WebcamApp
         private void btnPanel_Paint(object sender, PaintEventArgs e)
         {
 
-        }
-
-        private void searchCameraTimer_Tick(object sender, EventArgs e)
-        {
-            if (!Camera.initialized) { 
-                Camera.InitCameras(this);
-            }
-        }
+        }     
     }
 }
