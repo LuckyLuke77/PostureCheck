@@ -1,10 +1,12 @@
 ﻿using AForge.Video;
 using AForge.Video.DirectShow;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WebcamApp.MyClasses;
 using WebcamApp.Properties;
 
 namespace WebcamApp
@@ -18,15 +20,15 @@ namespace WebcamApp
 
         bool cameraStarted = false;
         bool videoPaused = false;
+        Label cameraName = new Label();
+        Label recTimer = new Label();
+        Stopwatch captureStopwatch;
         private void Form1_Load(object sender, EventArgs e)
         {
 
             // try to initialize the list of available cameras
-            //Camera.InitCameras(this);
             searchCameraTimer_Tick(sender, e);
             searchCameraTimer.Start();
-
-
 
             // initialize the apprearances of stuff
             btnStart.FlatAppearance.BorderSize = 0;
@@ -35,6 +37,7 @@ namespace WebcamApp
             MomentsPanel.AutoScroll = true;
             cameraText.SelectionAlignment = HorizontalAlignment.Center;
             mainCamera.Hide();
+            initBottomMenu();
             Form1_Resize(sender, e);
             Form1_ResizeEnd(sender, e);
             menuStrip1.Renderer = new ToolStripProfessionalRenderer(new MyColorTable());
@@ -42,11 +45,13 @@ namespace WebcamApp
             //settings
             Camera.SetSizeMode(this);
             captureTimer.Interval = SettingsForm.GetMomentCaptureFrequency();
+
+            captureStopwatch = new Stopwatch();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (Camera.IsRunning() == true)
+            if (Camera.IsRunning())
             {
                 Camera.Stop(); // stop the camera
             }
@@ -100,7 +105,11 @@ namespace WebcamApp
             // Reposition "No moments captured yet" text
             noMomentsText.Top = MomentsPanel.Top + MomentsPanel.Height / 2 - noMomentsText.Height / 2;
             noMomentsText.Left = MomentsPanel.Left + MomentsPanel.Width / 2 - noMomentsText.Width / 2;
-            
+
+            // Bottom Menu repositioning
+            //bottomMenu.Padding = new Padding(0, 2, 0, 0);
+            //bottomMenu.Top = this.Height - bottomMenu.Height - 39;
+
             if (Camera.IsRunning() && WindowState == FormWindowState.Maximized)
             {
                 Form1_ResizeEnd(sender, e);
@@ -141,9 +150,11 @@ namespace WebcamApp
                     Camera.Start(); // start the camera device
                     captureTimer.Start();       // start the moments timer
                     mainCamera.Show();
-
                     btnStart.Text = "Stop Capturing";
                     btnStart.BackColor = Color.Blue;
+                    recTimer.Image = new Bitmap(Images.GetPath("rec.png"));
+                    captureStopwatch.Start();
+                    stopwatchTimer.Start();
                 } else {
                     StopCapturing();
                 }
@@ -223,10 +234,51 @@ namespace WebcamApp
             Camera.Stop(); // stop the camera device
             captureTimer.Stop();       // stop the moments timer
             mainCamera.Hide();
-
+            recTimer.Image = new Bitmap(Images.GetPath("norec.png"));
             btnStart.Text = "Start Capturing";
             btnStart.BackColor = Color.FromArgb(88, 88, 88);
+            if (captureStopwatch != null)
+            {
+                captureStopwatch.Stop();
+                stopwatchTimer.Stop();
+            }
         }
+
+        private void initBottomMenu()
+        {
+            // Active camera label and style stuff
+            cameraName.Text = "CAMERA: " + Camera.getActiveCamera();
+            // sorry AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            cameraName.AutoSize = true;
+            int temp = cameraName.Width;
+            cameraName.AutoSize = false;
+            cameraName.Width = temp + 160;
+            cameraName.TextAlign = ContentAlignment.MiddleLeft;
+            beatifyBottomMenuLabel(cameraName);
+
+            // Capture stopwatch label and style stuff
+            recTimer.Text = "CAPTURING: 00:00:00";
+            recTimer.Image = new Bitmap(Images.GetPath("norec.png"));
+            recTimer.ImageAlign = ContentAlignment.MiddleLeft;
+            recTimer.Width = 175;
+            recTimer.TextAlign = ContentAlignment.MiddleRight;
+            beatifyBottomMenuLabel(recTimer);
+            
+
+
+        }
+        private void beatifyBottomMenuLabel(Label label)
+        {
+            label.ForeColor = Color.FromArgb(76, 76, 76);
+            label.Font = new Font("Microsoft Sans Serif", 10);
+            bottomMenu.Controls.Add(label);
+        }
+
+        private void stopwatchTimer_Tick(object sender, EventArgs e)
+        {
+            recTimer.Text = "CAPTURING: " + string.Format("{0:hh\\:mm\\:ss}", captureStopwatch.Elapsed);
+        }
+
         // dungeon
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
@@ -246,6 +298,6 @@ namespace WebcamApp
         private void btnPanel_Paint(object sender, PaintEventArgs e)
         {
 
-        }     
+        }
     }
 }

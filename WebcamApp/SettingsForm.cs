@@ -107,5 +107,10 @@ namespace WebcamApp
         {
 
         }
+
+        private void cboCameras_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
