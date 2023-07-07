@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MyClasses\Camera.cs" />
+    <Compile Include="MyClasses\Images.cs" />
     <Compile Include="MyClasses\Moment.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

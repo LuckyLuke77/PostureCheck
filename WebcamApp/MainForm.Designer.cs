@@ -49,6 +49,8 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noMomentsText = new System.Windows.Forms.RichTextBox();
             this.searchCameraTimer = new System.Windows.Forms.Timer(this.components);
+            this.bottomMenu = new System.Windows.Forms.FlowLayoutPanel();
+            this.stopwatchTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.mainCamera)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.assistPicBox)).BeginInit();
             this.btnPanel.SuspendLayout();
@@ -100,7 +102,7 @@
             // folderLabel
             // 
             this.folderLabel.AutoSize = true;
-            this.folderLabel.Location = new System.Drawing.Point(1011, 690);
+            this.folderLabel.Location = new System.Drawing.Point(941, 633);
             this.folderLabel.Name = "folderLabel";
             this.folderLabel.Size = new System.Drawing.Size(74, 13);
             this.folderLabel.TabIndex = 12;
@@ -248,12 +250,30 @@
             this.searchCameraTimer.Interval = 500;
             this.searchCameraTimer.Tick += new System.EventHandler(this.searchCameraTimer_Tick);
             // 
+            // bottomMenu
+            // 
+            this.bottomMenu.AutoSize = true;
+            this.bottomMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
+            this.bottomMenu.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.bottomMenu.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.bottomMenu.Location = new System.Drawing.Point(0, 682);
+            this.bottomMenu.MaximumSize = new System.Drawing.Size(0, 24);
+            this.bottomMenu.Name = "bottomMenu";
+            this.bottomMenu.Size = new System.Drawing.Size(1084, 0);
+            this.bottomMenu.TabIndex = 21;
+            // 
+            // stopwatchTimer
+            // 
+            this.stopwatchTimer.Interval = 1000;
+            this.stopwatchTimer.Tick += new System.EventHandler(this.stopwatchTimer_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(58)))), ((int)(((byte)(58)))));
             this.ClientSize = new System.Drawing.Size(1084, 682);
+            this.Controls.Add(this.bottomMenu);
             this.Controls.Add(this.noMomentsText);
             this.Controls.Add(this.cameraText);
             this.Controls.Add(this.btnPanel);
@@ -303,6 +323,8 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.RichTextBox noMomentsText;
         private System.Windows.Forms.Timer searchCameraTimer;
+        private System.Windows.Forms.FlowLayoutPanel bottomMenu;
+        private System.Windows.Forms.Timer stopwatchTimer;
     }
 }
 

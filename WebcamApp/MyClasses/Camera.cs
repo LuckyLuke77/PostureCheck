@@ -3,6 +3,7 @@ using AForge.Video.DirectShow;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,6 +72,19 @@ namespace WebcamApp
                 }
                 cbo.SelectedIndex = (int)Settings.Default["SelectedCameraIndex"];
             }         
+        }
+
+        static public String getActiveCamera() {
+            List<String> allCameras = new List<String>();
+            if (Found())
+            {
+                foreach (FilterInfo filterInfo in filterInfoCollection)
+                {
+                    allCameras.Add(filterInfo.Name);
+                }           
+                return allCameras[(int)Settings.Default["SelectedCameraIndex"]];
+            }
+            return null;
         }
         static public void SetSizeMode(MainForm mainForm) {
             string savedSizeMode = Settings.Default["CameraSizeMode"].ToString();
